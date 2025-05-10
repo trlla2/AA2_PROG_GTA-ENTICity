@@ -18,5 +18,28 @@
     <ClCompile Include="main.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="position.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="map.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="position.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

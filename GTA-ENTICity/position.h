@@ -1,6 +1,9 @@
 #pragma once
-struct position
+struct Position
 {
 	int x;
 	int y;
+
+	Position();
+	Position(int x,int y);
 }; 

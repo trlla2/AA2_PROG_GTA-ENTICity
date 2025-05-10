@@ -1,15 +1,22 @@
 #pragma once
 #include "position.h"
-class player
+#include "map.h"
+#include <Windows.h>
+class Player
 {
 private:
 	enum PlayerMovement {EMPTY, UP, DOWN, LEFT, RIGHT};
-	position pos;
+	Position pos;
 
+	Map* mapRef;
 
+	void setNewPosition(Position newPos);
 
 public:
-	position getPosition();
-	void move();
+	Player();
+	void setMapRef(Map* map);
+	void movement();
+	void attack();
+	Position getPosition();
 };
 
