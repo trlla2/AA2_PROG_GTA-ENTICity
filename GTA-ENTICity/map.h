@@ -21,8 +21,8 @@ public:
 	 
 	bool setNewPlayerPosition(Position newPos);
 	void printMap();
-	void getHeight();
-	void getWidth();
+	int getHeight();
+	int getWidth();
 	
 	~Map();
 };
