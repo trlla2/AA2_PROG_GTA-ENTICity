@@ -10,13 +10,14 @@ class Map
 private:
 	int height;
 	int width;
-	char** box; // Boxes can be: W = wall, . = Empty, J = Player(CJ), P = Pedestrians 
+	// Boxes can be: W = wall, . = Empty, J = Player(CJ), P = Pedestrians, M = Money
+	char** box; 
 
 	Player* playerRef;
 
 	int seeDistance;
 public:
-	Map(Player* playerRef);
+	Map(Player* player);
 	 
 	bool setNewPlayerPosition(Position newPos);
 	void printMap();

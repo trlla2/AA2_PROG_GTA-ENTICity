@@ -1,7 +1,7 @@
 #include "map.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* playerRef) {
+Map::Map(Player* player) {
 	// Debug ---- Aqui tendiramos que leer el "config.txt"
 	height = 30;
 	width = 20;
@@ -9,7 +9,7 @@ Map::Map(Player* playerRef) {
 
 	seeDistance = 15;
 
-	//playerRef = player; // get player ref
+	playerRef = player; // get player ref
 
 	// Create the map boxes
 	box = new char* [height];
