@@ -85,6 +85,8 @@ void Map::printMap() {
 
 int Map::getHeight() { return height; }
 int Map::getWidth() { return width; }
+char** Map::getBox() { return box; }
+
 
 Map::~Map() {
 	for (int i = 0; i < height; i++) {
