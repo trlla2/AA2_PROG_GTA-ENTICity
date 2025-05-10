@@ -6,7 +6,7 @@
 
 int main() {
 	// CONFIG
-	//srand(time(NULL)); // Generate seed for random
+	srand(time(NULL)); // Generate seed for random
 	Config config;
 	Player* player = new Player();
 	Map* map = new Map(player, config.height, config.width);
