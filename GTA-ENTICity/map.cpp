@@ -7,7 +7,7 @@ Map::Map(Player* player) {
 	width = 20;
 	// End Debug
 
-	seeDistance = 15;
+	seeDistance = 10;
 
 	playerRef = player; // get player ref
 
@@ -54,13 +54,37 @@ bool Map::setNewPlayerPosition(Position newPosition){
 }
 
 void Map::printMap() {
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
+	// SeeDistance is a diagonal not a radius
+	// Player has to be on the center (on the center of seeDistance)
+	// printing start always will be playerPos -  seeDistance/2 or 0
+	// printing ends when I and J is equal playerPos + seeDistance/2 or are equal to height and widht
+	
+	Position playerPos = playerRef->getPosition();
+	int startI = playerPos.x - seeDistance * 0.5f;
+	if (startI < 0)  startI = 0;
+	
+	int endI = playerPos.x + seeDistance * 0.5f;
+	if (endI >= height) endI = height;
+
+	int startJ = playerPos.y - seeDistance * 0.5f;
+	if (startJ < 0)  startJ = 0;
+
+	int endJ = playerPos.y + seeDistance * 0.5f;
+	if (endJ >= width) endJ = width;
+
+	
+
+	for (int i = startI; i < endI; i++) {
+		for (int j = startJ; j < endJ; j++) {
 			std::cout << box[i][j];
 		}
 		std::cout << std::endl;
 	}
 }
+
+
+int Map::getHeight() { return height; }
+int Map::getWidth() { return width; }
 
 Map::~Map() {
 	for (int i = 0; i < height; i++) {
