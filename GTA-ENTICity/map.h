@@ -13,11 +13,14 @@ private:
 	// Boxes can be: W = wall, . = Empty, J = Player(CJ), P = Pedestrians, M = Money
 	char** box; 
 
+	int toll1;
+	int toll2;
+
 	Player* playerRef;
 
 	int seeDistance;
 public:
-	Map(Player* player);
+	Map(Player* player, int h, int w);
 	 
 	bool setNewPlayerPosition(Position newPos);
 	void printMap();

@@ -1,11 +1,10 @@
 #include "map.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* player) {
-	// Debug ---- Aqui tendiramos que leer el "config.txt"
-	height = 30;
-	width = 20;
-	// End Debug
+Map::Map(Player* player, int h, int w) {
+	
+	height = h;
+	width = w;
 
 	seeDistance = 10;
 
@@ -19,6 +18,9 @@ Map::Map(Player* player) {
 		box[i] = new char[width];
 	}
 
+	// gaps of the divisions 
+	toll1 = GenerateClampedRandom(1, height - 2);  // avoid edges
+	toll2 = GenerateClampedRandom(1, height - 2);
 
 	// fill boxes
 	for (int i = 0; i < height; i++) {
@@ -26,6 +28,18 @@ Map::Map(Player* player) {
 			// Verify if is wall
 			if (i == 0 || i == height - 1 || j == 0 || j == width - 1) {
 				box[i][j] = 'W'; // Wall
+			}
+			else if (j == width / 3) { // Los Santos San Fierro diviison
+				if( i == toll1)
+					box[i][j] = '.';
+				else
+					box[i][j] = 'W';
+			}
+			else if (j == 2 * width / 3) { //San Fierro  diviison
+				if (i == toll2)
+					box[i][j] = '.';
+				else
+					box[i][j] = 'W';
 			}
 			else {
 				box[i][j] = '.'; // Empty box
@@ -80,6 +94,13 @@ void Map::printMap() {
 		}
 		std::cout << std::endl;
 	}
+
+	//for (int i = 0; i < height; i++) {// debug
+	//	for (int j = 0; j < width; j++) {
+	//		std::cout << box[i][j];
+	//	}
+	//	std::cout << std::endl;
+	//}
 }
 
 
