@@ -5,8 +5,8 @@ Peaton::Peaton(Player* player, Map* map)
 	playerRef = player;
 	mapRef = map;
 
-	//pos.x = rand() % 
-	//pos.y = rand() %
+	pos.x = rand() % mapRef->getWidth();
+	//pos.y = rand() % map
 }
 
 Peaton::~Peaton()
