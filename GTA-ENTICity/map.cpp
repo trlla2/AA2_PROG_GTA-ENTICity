@@ -1,11 +1,10 @@
 #include "map.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* player) {
-	// Debug ---- Aqui tendiramos que leer el "config.txt"
-	height = 30;
-	width = 20;
-	// End Debug
+Map::Map(Player* player, int h, int w) {
+	
+	height = h;
+	width = w;
 
 	seeDistance = 10;
 
