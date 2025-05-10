@@ -13,8 +13,10 @@ private:
 
 	Peaton(Player* player, Map* map);
 	~Peaton();
+	void SetNewPosition(Position p);
 
 public:
-	Position GetPosition();
+	Position GetPosition() const;
+	void MovePeaton();
 };
 

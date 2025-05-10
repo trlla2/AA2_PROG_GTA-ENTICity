@@ -88,6 +88,8 @@ int Map::getWidth() { return width; }
 char** Map::getBox() { return box; }
 
 
+
+
 Map::~Map() {
 	for (int i = 0; i < height; i++) {
 		delete[] box[i];
