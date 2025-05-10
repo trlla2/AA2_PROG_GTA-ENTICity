@@ -17,7 +17,7 @@ private:
 
 	int seeDistance;
 public:
-	Map(Player* player);
+	Map(Player* player, int h, int w);
 	 
 	bool setNewPlayerPosition(Position newPos);
 	void printMap();
