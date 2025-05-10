@@ -1,6 +1,7 @@
 #include "map.h"
+#include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* player) {
+Map::Map(Player* playerRef) {
 	// Debug ---- Aqui tendiramos que leer el "config.txt"
 	height = 30;
 	width = 20;
@@ -8,7 +9,7 @@ Map::Map(Player* player) {
 
 	seeDistance = 15;
 
-	playerRef = player; // get player ref
+	//playerRef = player; // get player ref
 
 	// Create the map boxes
 	box = new char* [height];
@@ -40,7 +41,16 @@ Map::Map(Player* player) {
 }
 
 bool Map::setNewPlayerPosition(Position newPosition){
+	if (box[newPosition.x][newPosition.y] == 'W' || box[newPosition.x][newPosition.y] == 'P') {
+		return false;
+	}
 
+	Position playerPos = playerRef->getPosition();
+	box[playerPos.x][playerPos.y] = '.'; // clear old position box
+
+	box[newPosition.x][newPosition.y] = 'J'; // print new position box
+	
+	return true;
 }
 
 void Map::printMap() {
@@ -48,6 +58,7 @@ void Map::printMap() {
 		for (int j = 0; j < width; j++) {
 			std::cout << box[i][j];
 		}
+		std::cout << std::endl;
 	}
 }
 

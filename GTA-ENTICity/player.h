@@ -1,7 +1,10 @@
 #pragma once
 #include "position.h"
-#include "map.h"
 #include <Windows.h>
+
+
+class Map; // declaracion anticipada para evitar dependencia circular
+
 class Player
 {
 private:

@@ -1,15 +1,16 @@
 #pragma once
 #include <iostream>
-#include "player.h"
 #include "position.h"
 #include "utils.h"
+
+class Player; // declaracion anticipada para evitar dependencia circular
 
 class Map
 {
 private:
 	int height;
 	int width;
-	char** box; // Boxes can be: W = wall, . = Empty, C = Player(CJ), P = Pedestrians 
+	char** box; // Boxes can be: W = wall, . = Empty, J = Player(CJ), P = Pedestrians 
 
 	Player* playerRef;
 

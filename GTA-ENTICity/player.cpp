@@ -1,4 +1,5 @@
 #include "player.h"
+#include "map.h" // incluyo player para evitar dependencia circular
 
 Player::Player() {
 

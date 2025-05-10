@@ -1,4 +1,5 @@
 #include "map.h"
+#include "player.h"
 #include <Windows.h>
 
 
@@ -9,7 +10,7 @@ int main() {
 	Map* map = new Map(player);
 	bool win = false;
 
-	const int FPS = 60;
+	const int FPS = 20;
 
 	//GAMELOOP
 	while (!win)
