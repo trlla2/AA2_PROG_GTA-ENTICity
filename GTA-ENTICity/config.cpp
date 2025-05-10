@@ -32,9 +32,8 @@ Config::Config() {
 	}
 
 	// assign values
-
-	height = values[0];
-	width = values[1];
+	width = values[0];
+	height = values[1];
 	numPedastriansSantos = values[2];
 	moneyToGoSanFierro = values[3];
 	maxMoneyDropPedastriansSantos = values[4];
