@@ -23,7 +23,7 @@ public:
 	void printMap();
 	int getHeight();
 	int getWidth();
-	
+	char** getBox();
 	~Map();
 };
 
