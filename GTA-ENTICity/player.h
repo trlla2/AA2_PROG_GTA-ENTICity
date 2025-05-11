@@ -8,6 +8,7 @@ class Map; // declaracion anticipada para evitar dependencia circular
 class Player
 {
 private:
+	int playerMoney = 0;
 	enum PlayerMovement {EMPTY, UP, DOWN, LEFT, RIGHT};
 	Position pos;
 
@@ -21,5 +22,6 @@ public:
 	void movement();
 	void Attack();
 	Position getPosition();
+	int GetPlayerMoney() const;
 };
 

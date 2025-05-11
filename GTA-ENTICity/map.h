@@ -3,6 +3,8 @@
 #include "position.h"
 #include "utils.h"
 #include "peaton.h"
+#include "money.h"
+#include "zones.h"
 
 class Player; // declaracion anticipada para evitar dependencia circular
 class Peaton;
@@ -21,12 +23,13 @@ private:
 	int toll2;
 	Peaton* peatonesLosSantos;
 	Peaton* peatonesSanFierro;
+	int** moneyValues; // Matriz de valores del dinero
 
 	Player* playerRef;
 
 	int seeDistance;
 public:
-	Map(Player* player, int h, int w , int numPeatonesSantos, int numPeatonesFierro);
+	Map(Player* player, int h, int w , int numPeatonesSantos, int numPeatonesFierro, int maxMoneyDropLS, int maxMoneyDropSF);
 	 
 	bool setNewPlayerPosition(Position newPos);
 	bool SetNewPeatonPosition(Position newPos, Peaton* peaton);
@@ -38,6 +41,10 @@ public:
 	int GetNumPeatonesSanFierro();
 	Peaton* GetPeatonesLosSantos();
 	Peaton* GetPeatonesSanFierro();
+	int CollectMoney(Position pos); 
+	int** GetMoneyValues();
 	~Map();
 };
+
+
 

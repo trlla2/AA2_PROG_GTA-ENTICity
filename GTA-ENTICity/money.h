@@ -4,12 +4,11 @@
 class Money
 {
 private:
-	Position pos;
-	int value;
-
-	Money();
-	~Money();
+    Position pos;
+    int value;
 public:
-	int GetMoneyValue();
+    Money(Position p, int v);
+    int GetValue() const;
+    Position GetPosition() const;
 };
 

@@ -3,6 +3,7 @@
 #include "position.h"
 #include "player.h"
 #include "map.h"
+#include "zones.h"
 
 //class Map;
 
@@ -12,17 +13,19 @@ private:
 	Position pos;
 	Player* playerRef;
 	Map* mapRef;
-
+	Zone zone;
+	int maxMoneyDrop;
 
 
 	void SetNewPosition(Position p);
 
 public:
 	Peaton();
-	Peaton(Player* player, Map* map);
+	Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop);
 	~Peaton();
 	Position GetPosition() const;
 	void MovePeaton();
-	void SetPeatonPos(Position);
+	bool IsNearToPlayer();
+	void Respawn();
 };
 

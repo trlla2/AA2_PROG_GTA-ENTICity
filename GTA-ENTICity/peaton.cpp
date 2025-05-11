@@ -4,17 +4,30 @@ Peaton::Peaton()
 {
 }
 
-Peaton::Peaton(Player* player, Map* map)
+Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop)
 {
 	playerRef = player;
 	mapRef = map;
+	zone = peatonZone;
+	maxMoneyDrop = maxMonDrop;
+
+	int minJ = 0;
+	int maxJ = 0;
+	if (zone == Zone::LOS_SANTOS) {
+		minJ = 1;
+		maxJ = mapRef->getWidth() / 3 - 1; // Primer tercio
+	}
+	else if (zone == Zone::SAN_FIERRO) {
+		minJ = mapRef->getWidth() / 3 + 1; // Segundo tercio
+		maxJ = 2 * (mapRef->getWidth() / 3) - 1;
+	}
 
 	bool instancedPeaton = false;
 	int checkPosX = 0;
 	int checkPosY = 0;
-	while (instancedPeaton == false) {
-		checkPosY = rand() % mapRef->getWidth();
-		checkPosX = rand() % mapRef->getHeight();
+	while (!instancedPeaton) {
+		checkPosX = rand() % (mapRef->getHeight() - 2) + 1; // Evitar bordes
+		checkPosY = rand() % (maxJ - minJ) + minJ; // J dentro de su zona
 		
 		if (mapRef->getBox()[checkPosX][checkPosY] != NULL) {
 			if (mapRef->getBox()[checkPosX][checkPosY] == '.') {
@@ -23,8 +36,6 @@ Peaton::Peaton(Player* player, Map* map)
 				instancedPeaton = true;
 			}
 		}
-		
-			
 	}
 }
 
@@ -32,13 +43,13 @@ Peaton::~Peaton()
 {
 	// Soltar dinero
 
-	// Generar nuevo peat�n
+	// Generar nuevo peaton
 	bool instancedPeaton = false;
 	int checkPosX = 0;
 	int checkPosY = 0;
 	while (instancedPeaton == false) {
 		checkPosX = rand() % mapRef->getWidth();
-		checkPosX = rand() % mapRef->getHeight();
+		checkPosY = rand() % mapRef->getHeight();
 
 		if (mapRef->getBox()[pos.x][pos.y] == '.') {
 			pos.x = checkPosX;
@@ -62,13 +73,9 @@ Position Peaton::GetPosition() const
 
 void Peaton::MovePeaton()
 {
-	Position playerPos = playerRef->getPosition();
-	int x = abs(playerPos.x - pos.x);
-	int y = abs(playerPos.x - pos.x);
+	bool shouldMove;
 
-	bool shouldMove = false;
-
-	if (x <= 1 && y <= 1)
+	if (IsNearToPlayer())
 		shouldMove = false;
 	else
 		shouldMove = true;
@@ -108,7 +115,56 @@ void Peaton::MovePeaton()
 	
 }
 
-void Peaton::SetPeatonPos(Position p)
+
+bool Peaton::IsNearToPlayer()
 {
-	pos = p;
+	Position playerPos = playerRef->getPosition();
+	int x = abs(playerPos.x - pos.x);
+	int y = abs(playerPos.y - pos.y);
+
+	if (x <= 1 && y <= 1)
+		return true;
+	else
+		return false;
+}
+
+void Peaton::Respawn()
+{
+	int minJ = 0;
+	int maxJ = 0;
+	if (zone == Zone::LOS_SANTOS) {
+		minJ = 1;
+		maxJ = mapRef->getWidth() / 3 - 1;
+	}
+	else if (zone == Zone::SAN_FIERRO){
+		minJ = mapRef->getWidth() / 3 + 1;
+		maxJ = 2 * (mapRef->getWidth() / 3) - 1;
+	}
+
+	bool instancedPeaton = false;
+	while (!instancedPeaton) {
+		int newX = rand() % (mapRef->getHeight() - 2) + 1;
+		int newY = rand() % (maxJ - minJ) + minJ;
+
+		if (mapRef->getBox()[newX][newY] == '.') {
+			Position oldPos = pos;
+
+			// Generar dinero según zona
+			int moneyValue = rand() % maxMoneyDrop + 1;
+			/*if (zone == Zone::LOS_SANTOS) {
+				moneyValue = rand() % 10 + 1; // 1-10
+			}
+			else {
+				moneyValue = rand() % 16 + 5; // 5-20
+			}*/
+
+			mapRef->getBox()[oldPos.x][oldPos.y] = '$';
+			mapRef->GetMoneyValues()[oldPos.x][oldPos.y] = moneyValue;
+
+			pos.x = newX;
+			pos.y = newY;
+			mapRef->SetNewPeatonPosition(pos, this);
+			instancedPeaton = true;
+		}
+	}
 }

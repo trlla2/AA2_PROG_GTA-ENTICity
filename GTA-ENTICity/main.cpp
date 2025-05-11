@@ -10,10 +10,8 @@ int main() {
 	srand(time(NULL)); // Generate seed for random
 	Config config;
 	Player* player = new Player();
-	Map* map = new Map(player, config.height, config.width, config.numPedastriansSantos, config.numPedastriansSanFierro);
-	Peaton* p = new Peaton(player, map);
-	Position pos(4, 5);
-	p->SetPeatonPos(pos);
+	Map* map = new Map(player, config.height, config.width, config.numPedastriansSantos, config.numPedastriansSanFierro, config.maxMoneyDropPedastriansSantos, config.maxMoneyDropPedastriansSanFerro);
+	
 	player->setMapRef(map);
 	bool win = false;
 
@@ -24,6 +22,7 @@ int main() {
 	{
 		//INPUT
 		player->movement();
+		player->Attack();
 		//UPDATE
 		//RENDER
 		system("CLS");

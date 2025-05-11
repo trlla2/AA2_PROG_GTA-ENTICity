@@ -1,7 +1,7 @@
 #include "map.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF) {
+Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int maxMoneyDropLS, int maxMoneyDropSF) {
 	
 	height = h;
 	width = w;
@@ -57,7 +57,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF) {
 	peatonesLosSantos = new Peaton[numPeatonesLosSantos];
 	Peaton* tempPeaton;
 	for (int i = 0; i < numPeatonesLosSantos; i++) {
-		tempPeaton = new Peaton(playerRef, this);
+		tempPeaton = new Peaton(playerRef, this, Zone::LOS_SANTOS, maxMoneyDropLS);
 
 		if (peatonesLosSantos != nullptr) {
 			peatonesLosSantos[i] = *tempPeaton;
@@ -66,14 +66,17 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF) {
 
 	peatonesSanFierro = new Peaton[numPeatonesSanFierro];
 	for (int i = 0; i < numPeatonesSanFierro; i++) {
-		tempPeaton = new Peaton(playerRef, this);
+		tempPeaton = new Peaton(playerRef, this, Zone::SAN_FIERRO, maxMoneyDropSF);
 
 		if (peatonesSanFierro != nullptr) {
 			peatonesSanFierro[i] = *tempPeaton;
 		}
 	}
 	
-
+	moneyValues = new int* [height];
+	for (int i = 0; i < height; i++) {
+		moneyValues[i] = new int[width](); // Inicializar a 0
+	}
 }
 
 bool Map::setNewPlayerPosition(Position newPosition){
@@ -131,12 +134,8 @@ void Map::printMap() {
 		std::cout << std::endl;
 	}
 
-	//for (int i = 0; i < height; i++) {// debug
-	//	for (int j = 0; j < width; j++) {
-	//		std::cout << box[i][j];
-	//	}
-	//	std::cout << std::endl;
-	//}
+	// Mostrar dinero del jugador debajo del mapa
+	std::cout << "\nDinero: $" << playerRef->GetPlayerMoney() << std::endl;
 }
 
 
@@ -144,26 +143,35 @@ int Map::getHeight() { return height; }
 int Map::getWidth() { return width; }
 char** Map::getBox() { return box; }
 
-int Map::GetNumPeatonesLosSantos()
-{
-	return numPeatonesLosSantos;
-}
+int Map::GetNumPeatonesLosSantos(){ return numPeatonesLosSantos; }
 
-int Map::GetNumPeatonesSanFierro()
-{
-	return numPeatonesSanFierro;
-}
+int Map::GetNumPeatonesSanFierro(){ return numPeatonesSanFierro; }
 
 Peaton* Map::GetPeatonesLosSantos(){ return peatonesLosSantos; }
 
 Peaton* Map::GetPeatonesSanFierro() { return peatonesSanFierro; }
 
 
+int Map::CollectMoney(Position pos) {
+	if (box[pos.x][pos.y] == '$') {
+		int value = moneyValues[pos.x][pos.y];
+		moneyValues[pos.x][pos.y] = 0; // Resetear valor
+		box[pos.x][pos.y] = '.'; // Quitar símbolo
+		return value;
+	}
+	return 0;
+}
 
+int** Map::GetMoneyValues() { return moneyValues; }
 
 Map::~Map() {
 	for (int i = 0; i < height; i++) {
 		delete[] box[i];
 	}
 	delete[] box;
+
+	for (int i = 0; i < height; i++) {
+		delete[] moneyValues[i];
+	}
+	delete[] moneyValues;
 }

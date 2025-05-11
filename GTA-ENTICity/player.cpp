@@ -43,20 +43,36 @@ void Player::movement() { // reads user input and moves the player accordingly
 
 void Player::Attack()
 {
-    Peaton* tempPeatonesLosSantos = mapRef->GetPeatonesLosSantos();
     for (int i = 0; i < mapRef->GetNumPeatonesLosSantos(); i++) {
-
+        Peaton& p = mapRef->GetPeatonesLosSantos()[i];
+        if (p.IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {
+            p.Respawn();  // Método nuevo
+            break;  // Atacar solo a un peaton por frame
+        }
     }
-    //for (auto i : tempPeatonesLosSantos){}
-    //if (pos)
+
+    for (int i = 0; i < mapRef->GetNumPeatonesSanFierro(); i++) {
+        Peaton& p = mapRef->GetPeatonesSanFierro()[i];
+        if (p.IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {
+            p.Respawn();
+            break;
+        }
+    }
+
 }
 
 void Player::setNewPosition(Position newPos) { // try to set the new position
-    if (mapRef != nullptr && mapRef->setNewPlayerPosition(newPos)) {
-        pos = newPos;
+    if (mapRef != nullptr) {
+        playerMoney += mapRef->CollectMoney(newPos);
+
+        if (mapRef->setNewPlayerPosition(newPos)) {
+            pos = newPos;
+        }
     }
 }
 
 Position Player::getPosition() {
     return pos;
 }
+
+int Player::GetPlayerMoney() const { return playerMoney; }
