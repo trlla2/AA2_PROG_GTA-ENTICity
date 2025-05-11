@@ -19,7 +19,7 @@ public:
 	Player();
 	void setMapRef(Map* map);
 	void movement();
-	void attack();
+	void Attack();
 	Position getPosition();
 };
 

@@ -4,6 +4,8 @@
 #include "player.h"
 #include "map.h"
 
+//class Map;
+
 class Peaton
 {
 private:
@@ -11,12 +13,16 @@ private:
 	Player* playerRef;
 	Map* mapRef;
 
-	Peaton(Player* player, Map* map);
-	~Peaton();
+
+
 	void SetNewPosition(Position p);
 
 public:
+	Peaton();
+	Peaton(Player* player, Map* map);
+	~Peaton();
 	Position GetPosition() const;
 	void MovePeaton();
+	void SetPeatonPos(Position);
 };
 

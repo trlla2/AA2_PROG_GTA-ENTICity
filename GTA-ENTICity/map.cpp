@@ -1,7 +1,7 @@
 #include "map.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* player, int h, int w) {
+Map::Map(Player* player, int h, int w, int numPeatonesLosSantos, int numPeatonesSanFierro) {
 	
 	height = h;
 	width = w;
@@ -9,6 +9,7 @@ Map::Map(Player* player, int h, int w) {
 	seeDistance = 10;
 
 	playerRef = player; // get player ref
+	
 
 	// Create the map boxes
 	box = new char* [height];
@@ -50,6 +51,25 @@ Map::Map(Player* player, int h, int w) {
 	// Set Player Pos --------------------------------- Debug
 	Position playerPos = playerRef->getPosition();
 	box[playerPos.x][playerPos.y] = 'J';
+
+	peatonesLosSantos = new Peaton[numPeatonesLosSantos];
+	Peaton* tempPeaton;
+	for (int i = 0; i < numPeatonesLosSantos; i++) {
+		tempPeaton = new Peaton(playerRef, this);
+
+		if (peatonesLosSantos != nullptr) {
+			peatonesLosSantos[i] = *tempPeaton;
+		}
+	}
+
+	peatonesSanFierro = new Peaton[numPeatonesSanFierro];
+	for (int i = 0; i < numPeatonesSanFierro; i++) {
+		tempPeaton = new Peaton(playerRef, this);
+
+		if (peatonesSanFierro != nullptr) {
+			peatonesSanFierro[i] = *tempPeaton;
+		}
+	}
 	
 
 }
@@ -64,6 +84,20 @@ bool Map::setNewPlayerPosition(Position newPosition){
 
 	box[newPosition.x][newPosition.y] = 'J'; // print new position box
 	
+	return true;
+}
+
+bool Map::SetNewPeatonPosition(Position newPos, Peaton *peaton)
+{
+	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'J' || box[newPos.x][newPos.y] == 'P') {
+		return false;
+	}
+
+	Position peatonPos = peaton->GetPosition();
+	box[peatonPos.x][peatonPos.y] = '.'; // clear old position box
+
+	box[newPos.x][newPos.y] = 'P'; // print new position box
+
 	return true;
 }
 
@@ -107,6 +141,10 @@ void Map::printMap() {
 int Map::getHeight() { return height; }
 int Map::getWidth() { return width; }
 char** Map::getBox() { return box; }
+
+Peaton* Map::GetPeatonesLosSantos(){ return peatonesLosSantos; }
+
+Peaton* Map::GetPeatonesSanFierro() { return peatonesSanFierro; }
 
 
 

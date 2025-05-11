@@ -41,6 +41,13 @@ void Player::movement() { // reads user input and moves the player accordingly
     }
 }
 
+void Player::Attack()
+{
+    Peaton* tempPeatonesLosSantos = mapRef->GetPeatonesLosSantos();
+    //for (auto i : tempPeatonesLosSantos){}
+    //if (pos)
+}
+
 void Player::setNewPosition(Position newPos) { // try to set the new position
     if (mapRef != nullptr && mapRef->setNewPlayerPosition(newPos)) {
         pos = newPos;
