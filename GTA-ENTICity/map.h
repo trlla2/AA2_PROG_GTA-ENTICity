@@ -12,6 +12,8 @@ class Map
 private:
 	int height;
 	int width;
+	int numPeatonesLosSantos;
+	int numPeatonesSanFierro;
 	// Boxes can be: W = wall, . = Empty, J = Player(CJ), P = Pedestrians, M = Money
 	char** box; 
 
@@ -24,7 +26,7 @@ private:
 
 	int seeDistance;
 public:
-	Map(Player* player, int h, int w , int numPeatonesLosSantos, int numPeatonesSanFierro);
+	Map(Player* player, int h, int w , int numPeatonesSantos, int numPeatonesFierro);
 	 
 	bool setNewPlayerPosition(Position newPos);
 	bool SetNewPeatonPosition(Position newPos, Peaton* peaton);
@@ -32,6 +34,8 @@ public:
 	int getHeight();
 	int getWidth();
 	char** getBox();
+	int GetNumPeatonesLosSantos();
+	int GetNumPeatonesSanFierro();
 	Peaton* GetPeatonesLosSantos();
 	Peaton* GetPeatonesSanFierro();
 	~Map();

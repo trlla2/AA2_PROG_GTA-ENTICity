@@ -1,10 +1,12 @@
 #include "map.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* player, int h, int w, int numPeatonesLosSantos, int numPeatonesSanFierro) {
+Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF) {
 	
 	height = h;
 	width = w;
+	numPeatonesLosSantos = numPeatonesLS;
+	numPeatonesSanFierro = numPeatonesSF;
 
 	seeDistance = 10;
 
@@ -141,6 +143,16 @@ void Map::printMap() {
 int Map::getHeight() { return height; }
 int Map::getWidth() { return width; }
 char** Map::getBox() { return box; }
+
+int Map::GetNumPeatonesLosSantos()
+{
+	return numPeatonesLosSantos;
+}
+
+int Map::GetNumPeatonesSanFierro()
+{
+	return numPeatonesSanFierro;
+}
 
 Peaton* Map::GetPeatonesLosSantos(){ return peatonesLosSantos; }
 

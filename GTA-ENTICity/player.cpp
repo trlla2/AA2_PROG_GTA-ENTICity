@@ -44,6 +44,9 @@ void Player::movement() { // reads user input and moves the player accordingly
 void Player::Attack()
 {
     Peaton* tempPeatonesLosSantos = mapRef->GetPeatonesLosSantos();
+    for (int i = 0; i < mapRef->GetNumPeatonesLosSantos(); i++) {
+
+    }
     //for (auto i : tempPeatonesLosSantos){}
     //if (pos)
 }
