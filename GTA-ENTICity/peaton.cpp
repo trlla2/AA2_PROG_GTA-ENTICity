@@ -32,7 +32,7 @@ Peaton::~Peaton()
 {
 	// Soltar dinero
 
-	// Generar nuevo peatón
+	// Generar nuevo peatï¿½n
 	bool instancedPeaton = false;
 	int checkPosX = 0;
 	int checkPosY = 0;
@@ -62,14 +62,18 @@ Position Peaton::GetPosition() const
 
 void Peaton::MovePeaton()
 {
-	if (playerRef->getPosition().x != this->pos.x + 1 && playerRef->getPosition().y != this->pos.y + 1 ||
-		playerRef->getPosition().x != this->pos.x + 1 && playerRef->getPosition().y != this->pos.y - 1 ||
-		playerRef->getPosition().x != this->pos.x - 1 && playerRef->getPosition().y != this->pos.y + 1 ||
-		playerRef->getPosition().x != this->pos.x - 1 && playerRef->getPosition().y != this->pos.y - 1 ||
-		playerRef->getPosition().x != this->pos.x && playerRef->getPosition().y != this->pos.y - 1 || 
-		playerRef->getPosition().x != this->pos.x && playerRef->getPosition().y != this->pos.y + 1 || 
-		playerRef->getPosition().x != this->pos.x - 1 && playerRef->getPosition().y != this->pos.y || 
-		playerRef->getPosition().x != this->pos.x + 1 && playerRef->getPosition().y != this->pos.y )
+	Position playerPos = playerRef->getPosition();
+	int x = abs(playerPos.x - pos.x);
+	int y = abs(playerPos.x - pos.x);
+
+	bool shouldMove = false;
+
+	if (x <= 1 && y <= 1)
+		shouldMove = false;
+	else
+		shouldMove = true;
+
+	if (shouldMove) // move 
 	{
 		int randomMoveDirection = rand() % 4; // 0 = up // 1 = down // 2 = left // 3 = right
 
@@ -99,7 +103,7 @@ void Peaton::MovePeaton()
 	}
 	else
 	{
-
+		// stop moving
 	}
 	
 }
