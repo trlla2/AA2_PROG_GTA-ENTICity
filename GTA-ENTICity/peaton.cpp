@@ -1,4 +1,4 @@
-#include "peaton.h"
+#include "Peaton.h"
 
 Peaton::Peaton()
 {

@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
-#include "position.h"
-#include "utils.h"
-#include "peaton.h"
-#include "money.h"
-#include "zones.h"
+#include "Position.h"
+#include "Utils.h"
+#include "Peaton.h"
+#include "Money.h"
+#include "Zones.h"
 
 class Player; // declaracion anticipada para evitar dependencia circular
 class Peaton;
@@ -34,15 +34,15 @@ public:
 	bool setNewPlayerPosition(Position newPos);
 	bool SetNewPeatonPosition(Position newPos, Peaton* peaton);
 	void printMap();
-	int getHeight();
-	int getWidth();
-	char** getBox();
-	int GetNumPeatonesLosSantos();
-	int GetNumPeatonesSanFierro();
-	Peaton* GetPeatonesLosSantos();
-	Peaton* GetPeatonesSanFierro();
+	int getHeight() const;
+	int getWidth() const;
+	char** getBox() const;
+	int GetNumPeatonesLosSantos() const;
+	int GetNumPeatonesSanFierro()const;
+	Peaton* GetPeatonesLosSantos() const;
+	Peaton* GetPeatonesSanFierro()const;
 	int CollectMoney(Position pos); 
-	int** GetMoneyValues();
+	int** GetMoneyValues() const;
 	~Map();
 };
 

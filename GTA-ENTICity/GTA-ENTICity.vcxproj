@@ -127,21 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="config.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="map.cpp" />
-    <ClCompile Include="peaton.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="position.cpp" />
+    <ClCompile Include="Config.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Peaton.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Position.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="config.h" />
-    <ClInclude Include="map.h" />
-    <ClInclude Include="peaton.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="position.h" />
-    <ClInclude Include="utils.h" />
-    <ClInclude Include="zones.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Peaton.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Zones.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

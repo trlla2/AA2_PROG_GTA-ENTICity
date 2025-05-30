@@ -1,5 +1,5 @@
-#include "player.h"
-#include "map.h" // incluyo player para evitar dependencia circular
+#include "Player.h"
+#include "Map.h" // incluyo player para evitar dependencia circular
 
 Player::Player() {
 
@@ -46,7 +46,7 @@ void Player::Attack()
     for (int i = 0; i < mapRef->GetNumPeatonesLosSantos(); i++) {
         Peaton& p = mapRef->GetPeatonesLosSantos()[i];
         if (p.IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {
-            p.Respawn();  // Método nuevo
+            p.Respawn();  // Mï¿½todo nuevo
             break;  // Atacar solo a un peaton por frame
         }
     }
@@ -71,7 +71,7 @@ void Player::setNewPosition(Position newPos) { // try to set the new position
     }
 }
 
-Position Player::getPosition() {
+Position Player::getPosition() const {
     return pos;
 }
 

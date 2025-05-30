@@ -1,5 +1,5 @@
 #pragma once
-#include "position.h"
+#include "Position.h"
 #include <Windows.h>
 
 
@@ -21,7 +21,7 @@ public:
 	void setMapRef(Map* map);
 	void movement();
 	void Attack();
-	Position getPosition();
+	Position getPosition() const;
 	int GetPlayerMoney() const;
 };
 

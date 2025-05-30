@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Map.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
 Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int maxMoneyDropLS, int maxMoneyDropSF) {
@@ -139,30 +139,30 @@ void Map::printMap() {
 }
 
 
-int Map::getHeight() { return height; }
-int Map::getWidth() { return width; }
-char** Map::getBox() { return box; }
+int Map::getHeight() const { return height; }
+int Map::getWidth() const { return width; }
+char** Map::getBox() const { return box; }
 
-int Map::GetNumPeatonesLosSantos(){ return numPeatonesLosSantos; }
+int Map::GetNumPeatonesLosSantos() const { return numPeatonesLosSantos; }
 
-int Map::GetNumPeatonesSanFierro(){ return numPeatonesSanFierro; }
+int Map::GetNumPeatonesSanFierro() const { return numPeatonesSanFierro; }
 
-Peaton* Map::GetPeatonesLosSantos(){ return peatonesLosSantos; }
+Peaton* Map::GetPeatonesLosSantos() const { return peatonesLosSantos; }
 
-Peaton* Map::GetPeatonesSanFierro() { return peatonesSanFierro; }
+Peaton* Map::GetPeatonesSanFierro() const { return peatonesSanFierro; }
 
 
 int Map::CollectMoney(Position pos) {
 	if (box[pos.x][pos.y] == '$') {
 		int value = moneyValues[pos.x][pos.y];
 		moneyValues[pos.x][pos.y] = 0; // Resetear valor
-		box[pos.x][pos.y] = '.'; // Quitar símbolo
+		box[pos.x][pos.y] = '.'; // Quitar sï¿½mbolo
 		return value;
 	}
 	return 0;
 }
 
-int** Map::GetMoneyValues() { return moneyValues; }
+int** Map::GetMoneyValues() const { return moneyValues; }
 
 Map::~Map() {
 	for (int i = 0; i < height; i++) {

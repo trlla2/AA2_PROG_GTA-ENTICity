@@ -1,8 +1,8 @@
-#include "map.h"
-#include "player.h"
-#include "config.h"
+#include "Map.h"
+#include "Player.h"
+#include "Config.h"
 #include <Windows.h>
-#include "peaton.h"
+#include "Peaton.h"
 
 
 int main() {
