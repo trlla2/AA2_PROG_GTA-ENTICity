@@ -2,6 +2,15 @@
 
 Peaton::Peaton()
 {
+	pos.x = 0;
+	pos.y = 0;
+
+	playerRef = nullptr;
+	mapRef = nullptr;
+
+	zone = Zone::LOS_SANTOS;  
+
+	maxMoneyDrop = 10;  
 }
 
 Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop)

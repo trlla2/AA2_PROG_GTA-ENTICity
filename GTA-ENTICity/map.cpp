@@ -30,7 +30,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 		for (int j = 0; j < width; j++) {
 			// Verify if is wall
 			if (i == 0 || i == height - 1 || j == 0 || j == width - 1) {
-				box[i][j] = 'W'; // Wall
+				box[i][j] = 'W'; 
 			}
 			else if (j == width / 3) { // Los Santos San Fierro diviison
 				if( i == toll1)

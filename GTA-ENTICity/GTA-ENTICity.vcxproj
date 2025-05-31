@@ -135,6 +135,7 @@
     <ClCompile Include="Position.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Peaton.h" />
