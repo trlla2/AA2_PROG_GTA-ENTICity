@@ -127,7 +127,7 @@ void Peaton::MovePeaton()
 
 bool Peaton::IsNearToPlayer()
 {
-	Position playerPos = playerRef->getPosition();
+	Position playerPos = playerRef->GetPosition();
 	int x = abs(playerPos.x - pos.x);
 	int y = abs(playerPos.y - pos.y);
 

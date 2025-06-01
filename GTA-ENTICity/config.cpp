@@ -1,10 +1,10 @@
 #include "Config.h"
 
-Config::Config() {
+Config::Config(std::string fileName) {
 	// Read de config.txt file
 	std::vector<int> values;
 
-	std::ifstream archive("config.txt");
+	std::ifstream archive(fileName);
 
 	if (!archive.is_open()) {
 		std::cout << "ERROR: NO CONFIG FILE";
@@ -26,8 +26,8 @@ Config::Config() {
 	}
 	archive.close();
 
-	if (values.size() < 8) {
-		std::cout << "ERROR: NOT ENOUGH VALUES" << std::endl;
+	if (values.size() < 11) {
+		std::cout << "ERROR: NOT ENOUGH VALUES (NEED 11 VALUES)" << std::endl;
 		return;
 	}
 
@@ -40,4 +40,7 @@ Config::Config() {
 	numPedastriansSanFierro = values[5];
 	moneyToGoVenturas = values[6];
 	maxMoneyDropPedastriansSanFerro = values[7];
+	numCarsLosSantos = values[8];     
+	numCarsSanFierro = values[9];      
+	numCarsLasVenturas = values[10];
 }

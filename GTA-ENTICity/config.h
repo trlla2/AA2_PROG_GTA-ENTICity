@@ -14,6 +14,9 @@ struct Config
 	int numPedastriansSanFierro;
 	int moneyToGoVenturas;
 	int maxMoneyDropPedastriansSanFerro;
+	int numCarsLosSantos;
+	int numCarsSanFierro;
+	int numCarsLasVenturas;
 
-	Config();
+	Config(std::string fileName);
 };

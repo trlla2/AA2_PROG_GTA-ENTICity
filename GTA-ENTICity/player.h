@@ -4,6 +4,7 @@
 
 
 class Map; // declaracion anticipada para evitar dependencia circular
+class Car;
 
 class Player
 {
@@ -11,6 +12,7 @@ private:
 	int playerMoney = 0;
 	enum PlayerMovement {EMPTY, UP, DOWN, LEFT, RIGHT};
 	Position pos;
+	Car* currentCar;
 
 	Map* mapRef;
 
@@ -21,7 +23,9 @@ public:
 	void setMapRef(Map* map);
 	void movement();
 	void Attack();
-	Position getPosition() const;
+	void GetInCar();
+	Car* GetCurrentCar() const;
+	Position GetPosition() const;
 	int GetPlayerMoney() const;
 };
 

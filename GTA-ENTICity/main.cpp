@@ -8,9 +8,9 @@
 int main() {
 	// CONFIG
 	srand(time(NULL)); // Generate seed for random
-	Config config;
+	Config config("config.txt");
 	Player* player = new Player();
-	Map* map = new Map(player, config.height, config.width, config.numPedastriansSantos, config.numPedastriansSanFierro, config.maxMoneyDropPedastriansSantos, config.maxMoneyDropPedastriansSanFerro);
+	Map* map = new Map(player, config.height, config.width, config.numPedastriansSantos, config.numPedastriansSanFierro, config.maxMoneyDropPedastriansSantos, config.maxMoneyDropPedastriansSanFerro, config.numCarsLosSantos, config.numCarsSanFierro, config.numCarsLasVenturas);
 	
 	player->setMapRef(map);
 	bool win = false;
@@ -24,17 +24,18 @@ int main() {
 		player->movement();
 		player->Attack();
 		//UPDATE
-		//RENDER
-		system("CLS");
-		map->printMap();
-
-		for (int i = 0; i < config.numPedastriansSantos; i++){
+		for (int i = 0; i < config.numPedastriansSantos; i++) {
 			map->GetPeatonesLosSantos()[i].MovePeaton();
 		}
 
 		for (int i = 0; i < config.numPedastriansSanFierro; i++) {
 			map->GetPeatonesSanFierro()[i].MovePeaton();
 		}
+		//RENDER
+		system("CLS");
+		map->printMap();
+
+		
 		//FRAME CONTROL
 		Sleep(1000 / FPS);
 	}
