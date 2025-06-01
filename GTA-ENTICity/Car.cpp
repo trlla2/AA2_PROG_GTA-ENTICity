@@ -51,6 +51,7 @@ Car::Car(Player* player, Map* map, Zone carZone) {
 		if (mapRef->getBox()[checkPosX][checkPosY] == '.') {
 			pos.x = checkPosX;
 			pos.y = checkPosY;
+			mapRef->getBox()[pos.x][pos.y] = 'C';
 			carPlaced = true;
 		}
 	}

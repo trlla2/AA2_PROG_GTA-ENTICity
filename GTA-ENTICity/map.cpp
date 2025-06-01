@@ -58,32 +58,6 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 	Position playerPos = playerRef->GetPosition();
 	box[playerPos.x][playerPos.y] = 'J';
 
-
-	// Create peatones
-	peatonesLosSantos = new Peaton[numPeatonesLosSantos];
-	Peaton* tempPeaton;
-	for (int i = 0; i < numPeatonesLosSantos; i++) {
-		tempPeaton = new Peaton(playerRef, this, Zone::LOS_SANTOS, maxMoneyDropLS);
-
-		if (peatonesLosSantos != nullptr) {
-			peatonesLosSantos[i] = *tempPeaton;
-		}
-	}
-
-	peatonesSanFierro = new Peaton[numPeatonesSanFierro];
-	for (int i = 0; i < numPeatonesSanFierro; i++) {
-		tempPeaton = new Peaton(playerRef, this, Zone::SAN_FIERRO, maxMoneyDropSF);
-
-		if (peatonesSanFierro != nullptr) {
-			peatonesSanFierro[i] = *tempPeaton;
-		}
-	}
-	
-	moneyValues = new int* [height];
-	for (int i = 0; i < height; i++) {
-		moneyValues[i] = new int[width](); // Inicializar a 0
-	}
-
 	// Create Cars
 	carsLosSantos = new Car[numCarsLosSantos];
 	Car* tempCar;
@@ -109,6 +83,31 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 			carsLasVenturas[i] = *tempCar;
 		}
 	}
+
+	// Create peatones
+	peatonesLosSantos = new Peaton[numPeatonesLosSantos];
+	Peaton* tempPeaton;
+	for (int i = 0; i < numPeatonesLosSantos; i++) {
+		tempPeaton = new Peaton(playerRef, this, Zone::LOS_SANTOS, maxMoneyDropLS);
+
+		if (peatonesLosSantos != nullptr) {
+			peatonesLosSantos[i] = *tempPeaton;
+		}
+	}
+
+	peatonesSanFierro = new Peaton[numPeatonesSanFierro];
+	for (int i = 0; i < numPeatonesSanFierro; i++) {
+		tempPeaton = new Peaton(playerRef, this, Zone::SAN_FIERRO, maxMoneyDropSF);
+
+		if (peatonesSanFierro != nullptr) {
+			peatonesSanFierro[i] = *tempPeaton;
+		}
+	}
+	
+	moneyValues = new int* [height];
+	for (int i = 0; i < height; i++) {
+		moneyValues[i] = new int[width](); // Inicializar a 0
+	}
 }
 
 bool Map::checkNewPlayerPosition(Position newPosition){
@@ -131,7 +130,7 @@ bool Map::checkNewCarPosition(Position newPos) {
 	Position carPos = playerRef->GetCurrentCar()->GetPosition();
 	box[carPos.x][carPos.y] = '.'; // clear old position box
 
-
+	box[newPos.x][newPos.y] = 'C';
 }
 
 Car* Map::FindNearestCar(Position playerPos) {
@@ -180,7 +179,7 @@ Car* Map::FindNearestCar(Position playerPos) {
 
 bool Map::SetNewPeatonPosition(Position newPos, Peaton *peaton)
 {
-	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'J' || box[newPos.x][newPos.y] == 'P' || box[newPos.x][newPos.y] == 'C') {
+	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'J' || box[newPos.x][newPos.y] == 'P' || box[newPos.x][newPos.y] == 'C' || newPos.y < (2 * getWidth())) {
 		return false;
 	}
 

@@ -37,11 +37,12 @@ private:
 
 	int seeDistance;
 public:
-	Map(Player* player, int h, int w , int numPeatonesSantos, int numPeatonesFierro, int maxMoneyDropLS, int maxMoneyDropSF);
+	Map(Player* player, int h, int w , int numPeatonesSantos, int numPeatonesFierro, int maxMoneyDropLS, int maxMoneyDropSF, int numCarsLS, int numCarsSF, int numCarsLV);
 	 
 	bool checkNewPlayerPosition(Position newPos);
 	bool checkNewCarPosition(Position newPos);
 	Car* FindNearestCar(Position playerPos);
+	void ExitCar();
 	void HandleCarPedestrianCollision(Position carPos);
 	bool SetNewPeatonPosition(Position newPos, Peaton* peaton);
 	void printMap();
