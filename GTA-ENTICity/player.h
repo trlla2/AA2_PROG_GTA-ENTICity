@@ -32,6 +32,7 @@ public:
 	Position GetPosition() const;
 	int GetPlayerMoney() const;
 	void TakeDamage(int damage);
+	void Respawn();
 	bool IsAlive() const;
 	int GetHealth() const;
 	int GetMaxHealth() const;

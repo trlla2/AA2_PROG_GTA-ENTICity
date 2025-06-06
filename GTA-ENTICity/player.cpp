@@ -162,6 +162,12 @@ void Player::TakeDamage(int damage) {
     }
 }
 
+void Player::Respawn() {
+    pos.x = 4;
+    pos.y = 4;
+    health = maxHealth;
+}
+
 bool Player::IsAlive() const {
     return health > 0;
 }

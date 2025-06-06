@@ -318,9 +318,6 @@ void Map::printMap() {
 	if (playerRef->IsInCar()) {
 		std::cout << "Driving - Press E to exit the car" << std::endl;
 	}
-
-	std::cout << bigSmoke->IsAlive() << std::endl;
-	
 }
 
 
