@@ -2,7 +2,7 @@
 #include "Car.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
 
-Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int maxMoneyDropLS, int maxMoneyDropSF, int numCarsLS, int numCarsSF, int numCarsLV) {
+Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int maxMoneyDropLS, int maxMoneyDropSF, int numCarsLS, int numCarsSF, int numCarsLV, int peatonDMGLS, int peatonDMGSF, int peatonHPLS, int peatonHPSF) {
 	
 	height = h;
 	width = w;
@@ -88,7 +88,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 	peatonesLosSantos = new Peaton[numPeatonesLosSantos];
 	Peaton* tempPeaton;
 	for (int i = 0; i < numPeatonesLosSantos; i++) {
-		tempPeaton = new Peaton(playerRef, this, Zone::LOS_SANTOS, maxMoneyDropLS);
+		tempPeaton = new Peaton(playerRef, this, Zone::LOS_SANTOS, maxMoneyDropLS, peatonDMGLS, peatonHPLS);
 
 		if (peatonesLosSantos != nullptr) {
 			peatonesLosSantos[i] = *tempPeaton;
@@ -97,7 +97,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 
 	peatonesSanFierro = new Peaton[numPeatonesSanFierro];
 	for (int i = 0; i < numPeatonesSanFierro; i++) {
-		tempPeaton = new Peaton(playerRef, this, Zone::SAN_FIERRO, maxMoneyDropSF);
+		tempPeaton = new Peaton(playerRef, this, Zone::SAN_FIERRO, maxMoneyDropSF, peatonDMGLS, peatonHPLS);
 
 		if (peatonesSanFierro != nullptr) {
 			peatonesSanFierro[i] = *tempPeaton;

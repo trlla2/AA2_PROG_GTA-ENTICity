@@ -13,13 +13,16 @@ Peaton::Peaton()
 	maxMoneyDrop = 10;  
 }
 
-Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop)
+Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop, int attackDMG, int hp)
 {
 	playerRef = player;
 	mapRef = map;
 	zone = peatonZone;
 	maxMoneyDrop = maxMonDrop;
-
+	damage = attackDMG;
+	maxHealth = hp;
+	health = maxHealth;
+	behavior = (rand() % 2 == 0) ? NEUTRAL : AGGRESSIVE;
 	int minJ = 0;
 	int maxJ = 0;
 	if (zone == Zone::LOS_SANTOS) {
@@ -50,8 +53,6 @@ Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop)
 
 Peaton::~Peaton()
 {
-	// Soltar dinero
-
 	// Generar nuevo peaton
 	bool instancedPeaton = false;
 	int checkPosX = 0;
@@ -160,12 +161,7 @@ void Peaton::Respawn()
 
 			// Generar dinero según zona
 			int moneyValue = rand() % maxMoneyDrop + 1;
-			/*if (zone == Zone::LOS_SANTOS) {
-				moneyValue = rand() % 10 + 1; // 1-10
-			}
-			else {
-				moneyValue = rand() % 16 + 5; // 5-20
-			}*/
+			
 
 			mapRef->getBox()[oldPos.x][oldPos.y] = '$';
 			mapRef->GetMoneyValues()[oldPos.x][oldPos.y] = moneyValue;
@@ -176,4 +172,59 @@ void Peaton::Respawn()
 			instancedPeaton = true;
 		}
 	}
+}
+
+void Peaton::TakeDamage(int damage)
+{
+	health -= damage;
+	if (health < 0) {
+		health = 0;
+	}
+
+	
+	if (behavior == AGGRESSIVE && IsNearToPlayer()) {
+		isAttacking = true;
+		attackTimer = 0.0f; 
+	}
+}
+
+bool Peaton::IsAlive() const {	return health > 0; }
+
+void Peaton::UpdateAttackTimer(float deltaTime)
+{
+	if (isAttacking && behavior == AGGRESSIVE && IsNearToPlayer()) {
+		attackTimer += deltaTime;
+
+		
+		if (attackTimer >= 1.0f) {
+			AttackPlayer();
+			attackTimer = 0.0f; // Reset timer
+		}
+	}
+	else {
+		attackTimer = 0.0f;
+		isAttacking = false;
+	}
+}
+
+void Peaton::AttackPlayer()
+{
+ 	if (behavior == AGGRESSIVE && IsNearToPlayer() && IsAlive()) {
+		playerRef->TakeDamage(damage);
+	}
+}
+
+PedestrianBehavior Peaton::GetBehavior() const
+{
+	return behavior;
+}
+
+int Peaton::GetHealth() const
+{
+	return health;
+}
+
+int Peaton::GetMaxHealth() const
+{
+	return maxHealth;
 }

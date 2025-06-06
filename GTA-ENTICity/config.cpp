@@ -34,13 +34,25 @@ Config::Config(std::string fileName) {
 	// assign values
 	width = values[0];
 	height = values[1];
+	
 	numPedastriansSantos = values[2];
 	moneyToGoSanFierro = values[3];
 	maxMoneyDropPedastriansSantos = values[4];
+
 	numPedastriansSanFierro = values[5];
 	moneyToGoVenturas = values[6];
 	maxMoneyDropPedastriansSanFerro = values[7];
+	
 	numCarsLosSantos = values[8];     
 	numCarsSanFierro = values[9];      
 	numCarsLasVenturas = values[10];
+	
+	pedestrianHealthLosSantos = values[11];
+	pedestrianHealthSanFierro = values[12];
+	
+	damageToPlayerLosSantos = values[13];
+	damageToPlayerSanFierro = values[14];
+	
+	playerAttackPower = values[15];
+	playerMaxHealth = values[16];
 }

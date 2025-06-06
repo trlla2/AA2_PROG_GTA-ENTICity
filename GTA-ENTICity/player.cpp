@@ -2,10 +2,13 @@
 #include "Car.h"
 #include "Map.h" // incluyo player para evitar dependencia circular
 
-Player::Player() {
+Player::Player(int maxHP, int attackPwr) {
 
     mapRef = nullptr;
     currentCar = nullptr;
+    health = maxHP;
+    maxHealth = maxHP;
+    attackPower = attackPwr;
     // debug set position
     pos.x = 4;
     pos.y = 4;
@@ -78,7 +81,10 @@ void Player::Attack()
         for (int i = 0; i < mapRef->GetNumPeatonesLosSantos(); i++) {
             Peaton& p = mapRef->GetPeatonesLosSantos()[i];
             if (p.IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {
-                p.Respawn();  // Método nuevo
+                p.TakeDamage(attackPower);
+                if (!p.IsAlive()) {
+                    p.Respawn(); 
+                }
                 break;  // Atacar solo a un peaton por frame
             }
         }
@@ -86,7 +92,10 @@ void Player::Attack()
         for (int i = 0; i < mapRef->GetNumPeatonesSanFierro(); i++) {
             Peaton& p = mapRef->GetPeatonesSanFierro()[i];
             if (p.IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {
-                p.Respawn();
+                p.TakeDamage(attackPower);
+                if (!p.IsAlive()) {
+                    p.Respawn();  
+                }
                 break;
             }
         }
@@ -136,3 +145,26 @@ Position Player::GetPosition() const {
 }
 
 int Player::GetPlayerMoney() const { return playerMoney; }
+
+void Player::TakeDamage(int damage) {
+    health -= damage;
+    if (health < 0) {
+        health = 0;
+    }
+}
+
+bool Player::IsAlive() const {
+    return health > 0;
+}
+
+int Player::GetHealth() const {
+    return health;
+}
+
+int Player::GetMaxHealth() const {
+    return maxHealth;
+}
+
+int Player::GetAttackPower() const {
+    return attackPower;
+}

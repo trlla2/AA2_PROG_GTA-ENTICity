@@ -8,6 +8,7 @@ struct Config
 {
 	int height;
 	int width;
+
 	int numPedastriansSantos;
 	int moneyToGoSanFierro;
 	int maxMoneyDropPedastriansSantos;
@@ -17,6 +18,13 @@ struct Config
 	int numCarsLosSantos;
 	int numCarsSanFierro;
 	int numCarsLasVenturas;
+	int pedestrianHealthLosSantos;
+	int pedestrianHealthSanFierro;
+	int damageToPlayerLosSantos;
+	int damageToPlayerSanFierro;
+
+	int playerAttackPower;
+	int playerMaxHealth;
 
 	Config(std::string fileName);
 };

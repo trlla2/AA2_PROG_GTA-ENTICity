@@ -10,6 +10,9 @@ class Player
 {
 private:
 	int playerMoney = 0;
+	int health;
+	int maxHealth;
+	int attackPower;
 	enum PlayerMovement {EMPTY, UP, DOWN, LEFT, RIGHT};
 	Position pos;
 	Car* currentCar;
@@ -19,7 +22,7 @@ private:
 	void setNewPosition(Position newPos);
 
 public:
-	Player();
+	Player(int maxHP, int attackPwr);
 	void setMapRef(Map* map);
 	void movement();
 	void Attack();
@@ -28,5 +31,10 @@ public:
 	bool IsInCar() const;
 	Position GetPosition() const;
 	int GetPlayerMoney() const;
+	void TakeDamage(int damage);
+	bool IsAlive() const;
+	int GetHealth() const;
+	int GetMaxHealth() const;
+	int GetAttackPower() const;
 };
 
