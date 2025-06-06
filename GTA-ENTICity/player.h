@@ -13,6 +13,7 @@ private:
 	int health;
 	int maxHealth;
 	int attackPower;
+	bool arrested;
 	enum PlayerMovement {EMPTY, UP, DOWN, LEFT, RIGHT};
 	Position pos;
 	Car* currentCar;
@@ -31,11 +32,14 @@ public:
 	bool IsInCar() const;
 	Position GetPosition() const;
 	int GetPlayerMoney() const;
+	void RestPlayerMoney(int rest);
 	void TakeDamage(int damage);
 	void Respawn();
 	bool IsAlive() const;
 	int GetHealth() const;
 	int GetMaxHealth() const;
 	int GetAttackPower() const;
+	bool IsArrested() const;
+	void SetIsArrested();
 };
 

@@ -9,6 +9,7 @@ Player::Player(int maxHP, int attackPwr) {
     health = maxHP;
     maxHealth = maxHP;
     attackPower = attackPwr;
+    arrested = false;
     // debug set position
     pos.x = 4;
     pos.y = 4;
@@ -155,6 +156,10 @@ Position Player::GetPosition() const {
 
 int Player::GetPlayerMoney() const { return playerMoney; }
 
+void Player::RestPlayerMoney(int rest) {
+    playerMoney -= rest;
+}
+
 void Player::TakeDamage(int damage) {
     health -= damage;
     if (health < 0) {
@@ -183,3 +188,7 @@ int Player::GetMaxHealth() const {
 int Player::GetAttackPower() const {
     return attackPower;
 }
+
+bool Player::IsArrested() const { return arrested; }
+
+void Player::SetIsArrested() { arrested = true; }

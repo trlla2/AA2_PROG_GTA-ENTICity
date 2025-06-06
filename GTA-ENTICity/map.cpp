@@ -17,6 +17,11 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 
 	playerRef = player; // get player ref
 
+	moneyForToll1 = 100;
+	moneyForToll2 = 500;
+	alreadyPassedToll1 = false;
+	alreadyPassedToll2 = false;
+
 
 	// Create the map boxes
 	box = new char* [height];
@@ -114,19 +119,42 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 	}
 }
 
-bool Map::checkNewPlayerPosition(Position newPosition) {
+bool Map::checkNewPlayerPosition(Position newPos) {
 	
-	if (box[newPosition.x][newPosition.y] == 'W' ||
-		box[newPosition.x][newPosition.y] == 'P' ||
-		box[newPosition.x][newPosition.y] == 'C' ||
-		box[newPosition.x][newPosition.y] == 'B') {
+	if (box[newPos.x][newPos.y] == 'W' ||
+		box[newPos.x][newPos.y] == 'P' ||
+		box[newPos.x][newPos.y] == 'C' ||
+		box[newPos.x][newPos.y] == 'B') {
 		return false;
 	}
 
 	Position playerPos = playerRef->GetPosition();
 	box[playerPos.x][playerPos.y] = '.'; // clear old position box
 
-	box[newPosition.x][newPosition.y] = 'J'; // print new position box
+	box[newPos.x][newPos.y] = 'J'; // print new position box
+
+	Position toll1Pos(toll1, width / 3);
+	Position toll2Pos(toll2, 2 * width / 3);
+
+
+	if (newPos == toll1Pos && !alreadyPassedToll1) {
+		if (playerRef->GetPlayerMoney() - moneyForToll1 < 0) {
+			playerRef->SetIsArrested();
+		}
+		else {
+			playerRef->RestPlayerMoney(moneyForToll1);
+			alreadyPassedToll1 = true;
+		}
+	}
+	else if (newPos == toll2Pos && !alreadyPassedToll2) {
+		if (playerRef->GetPlayerMoney() - moneyForToll2 < 0) {
+			playerRef->SetIsArrested();
+		}
+		else {
+			playerRef->RestPlayerMoney(moneyForToll2);
+			alreadyPassedToll2 = true;
+		}
+	}
 
 	return true;
 }
@@ -135,11 +163,33 @@ bool Map::checkNewCarPosition(Position newPos) {
 	
 	if (box[newPos.x][newPos.y] == 'W' ||
 		box[newPos.x][newPos.y] == 'C' ||
-		box[newPos.x][newPos.y] == 'B' ||
-		newPos.x < 0 || newPos.x >= height ||
-		newPos.y < 0 || newPos.y >= width) {
+		box[newPos.x][newPos.y] == 'B') {
 		return false;
 	}
+
+	Position toll1Pos(toll1, width / 3);
+	Position toll2Pos(toll2, 2 * width / 3);
+
+
+	if (newPos == toll1Pos && !alreadyPassedToll1) {
+		if (playerRef->GetPlayerMoney() - moneyForToll1 < 0) {
+			playerRef->SetIsArrested();
+		}
+		else {
+			playerRef->RestPlayerMoney(moneyForToll1);
+			alreadyPassedToll1 = true;
+		}
+	}
+	else if (newPos == toll2Pos && !alreadyPassedToll2) {
+		if (playerRef->GetPlayerMoney() - moneyForToll2 < 0) {
+			playerRef->SetIsArrested();
+		}
+		else {
+			playerRef->RestPlayerMoney(moneyForToll2);
+			alreadyPassedToll2 = true;
+		}
+	}
+
 	return true;
 }
 

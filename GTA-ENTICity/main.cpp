@@ -13,7 +13,7 @@ int main() {
 	Map* map = new Map(player, config.height, config.width, config.numPedastriansSantos, config.numPedastriansSanFierro, config.maxMoneyDropPedastriansSantos, config.maxMoneyDropPedastriansSanFerro, config.numCarsLosSantos, config.numCarsSanFierro, config.numCarsLasVenturas, config.damageToPlayerLosSantos, config.damageToPlayerSanFierro, config.pedestrianHealthLosSantos, config.pedestrianHealthSanFierro);
 	
 	player->setMapRef(map);
-	bool playing = false;
+	bool playing = true;
 
 	const int FPS = 30;
 
@@ -21,7 +21,7 @@ int main() {
 	float deltaTime = 0.0f;
 
 	//GAMELOOP
-	while (!playing)
+	while (playing)
 	{
 		//INPUT
 		player->movement();
@@ -49,15 +49,14 @@ int main() {
 			player->Respawn();
 		}
 
-		if (map->GetBigSmoke()->IsAlive()) {
-			playing = true;
+		if (!map->GetBigSmoke()->IsAlive() || player->IsArrested()) {
+			playing = false;
 		}
 
 		//RENDER
 		system("CLS");
 		map->printMap();
 		std::cout << "Current Health: " << player->GetHealth() << std::endl;
-		std::cout << map->GetBigSmoke()->IsAlive();
 
 		
 		//FRAME CONTROL

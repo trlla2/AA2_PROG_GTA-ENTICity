@@ -28,6 +28,14 @@ private:
 
 	int toll1;
 	int toll2;
+
+	int moneyForToll1;
+	int moneyForToll2;
+
+	bool alreadyPassedToll1;
+	bool alreadyPassedToll2;
+
+
 	Peaton* peatonesLosSantos;
 	Peaton* peatonesSanFierro;
 	Car* carsLosSantos;
@@ -35,6 +43,8 @@ private:
 	Car* carsLasVenturas;
 	BigSmoke* bigSmoke;
 	int** moneyValues; // Matriz de valores del dinero
+
+	
 
 	Player* playerRef;
 
