@@ -124,13 +124,9 @@ bool Map::checkNewPlayerPosition(Position newPosition){
 }
 
 bool Map::checkNewCarPosition(Position newPos) {
-	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'C') {
+	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'C' || newPos.x < 0 || newPos.x >= height || newPos.y < 0 || newPos.y >= width) {
 		return false;
 	}
-	Position carPos = playerRef->GetCurrentCar()->GetPosition();
-	box[carPos.x][carPos.y] = '.'; // clear old position box
-
-	box[newPos.x][newPos.y] = 'C';
 	return true;
 }
 
@@ -181,23 +177,53 @@ Car* Map::FindNearestCar(Position playerPos) {
 
 void Map::HandleCarPedestrianCollision(Position carPos) {
 	if (box[carPos.x][carPos.y] == 'P') {
+		Peaton* hitPedestrian = nullptr;
+		int maxMoneyDrop = 0;
 
-		// Check Los Santos pedestrians
 		for (int i = 0; i < numPeatonesLosSantos; i++) {
 			if (peatonesLosSantos[i].GetPosition() == carPos) {
-				box[carPos.x][carPos.y] = '.';
-				peatonesLosSantos[i].Respawn(); 
+				hitPedestrian = &peatonesLosSantos[i];
+				maxMoneyDrop = 10; 
 				break;
 			}
 		}
 
-		// Check San Fierro pedestrians
-		for (int i = 0; i < numPeatonesSanFierro; i++) {
-			if (peatonesSanFierro[i].GetPosition() == carPos) {
-				box[carPos.x][carPos.y] = '.';
-				peatonesSanFierro[i].Respawn(); 
-				break;
+		
+		if (hitPedestrian == nullptr) {
+			for (int i = 0; i < numPeatonesSanFierro; i++) {
+				if (peatonesSanFierro[i].GetPosition() == carPos) {
+					hitPedestrian = &peatonesSanFierro[i];
+					maxMoneyDrop = 16; 
+					break;
+				}
 			}
+		}
+
+		if (hitPedestrian != nullptr) {
+			box[carPos.x][carPos.y] = '.';
+
+			int directions[8][2] = { {-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1} };
+			bool moneyPlaced = false;
+
+			for (int i = 0; i < 8 && !moneyPlaced; i++) {
+				int newX = carPos.x + directions[i][0];
+				int newY = carPos.y + directions[i][1];
+
+				if (newX >= 0 && newX < height && newY >= 0 && newY < width && box[newX][newY] == '.') {
+					int moneyValue = rand() % maxMoneyDrop + 1;
+					box[newX][newY] = '$';
+					moneyValues[newX][newY] = moneyValue;
+					moneyPlaced = true;
+				}
+			}
+
+			if (!moneyPlaced) {
+				int moneyValue = rand() % maxMoneyDrop + 1;
+				box[carPos.x][carPos.y] = '$';
+				moneyValues[carPos.x][carPos.y] = moneyValue;
+			}
+
+			hitPedestrian->Respawn();
 		}
 	}
 }
@@ -218,16 +244,36 @@ bool Map::SetNewPeatonPosition(Position newPos, Peaton *peaton)
 }
 
 void Map::printMap() {
-	
+	// Solo mostrar al jugador si no está en un coche
 	if (!playerRef->IsInCar()) {
 		Position playerPos = playerRef->GetPosition();
 		box[playerPos.x][playerPos.y] = 'J';
 	}
+	else {
+		// Si está en coche, mostrar el coche en su posición
+		Position carPos = playerRef->GetCurrentCar()->GetPosition();
+		box[carPos.x][carPos.y] = 'C';
+	}
 
-	Position playerPos = playerRef->GetPosition();
+	// Actualizar posiciones de peatones
+	for (int i = 0; i < numPeatonesLosSantos; i++) {
+		Position peatonPos = peatonesLosSantos[i].GetPosition();
+		if (box[peatonPos.x][peatonPos.y] == '.') {
+			box[peatonPos.x][peatonPos.y] = 'P';
+		}
+	}
+
+	for (int i = 0; i < numPeatonesSanFierro; i++) {
+		Position peatonPos = peatonesSanFierro[i].GetPosition();
+		if (box[peatonPos.x][peatonPos.y] == '.') {
+			box[peatonPos.x][peatonPos.y] = 'P';
+		}
+	}
+
+	Position playerPos = playerRef->IsInCar() ? playerRef->GetCurrentCar()->GetPosition() : playerRef->GetPosition();
 	int startI = playerPos.x - seeDistance * 0.5f;
 	if (startI < 0)  startI = 0;
-	
+
 	int endI = playerPos.x + seeDistance * 0.5f;
 	if (endI >= height) endI = height;
 
@@ -237,8 +283,6 @@ void Map::printMap() {
 	int endJ = playerPos.y + seeDistance * 0.5f;
 	if (endJ >= width) endJ = width;
 
-	
-
 	for (int i = startI; i < endI; i++) {
 		for (int j = startJ; j < endJ; j++) {
 			std::cout << box[i][j];
@@ -246,8 +290,11 @@ void Map::printMap() {
 		std::cout << std::endl;
 	}
 
-	// Mostrar dinero del jugador debajo del mapa
 	std::cout << "\nDinero: $" << playerRef->GetPlayerMoney() << std::endl;
+
+	if (playerRef->IsInCar()) {
+		std::cout << "Driving - Press E to exit the car" << std::endl;
+	}
 }
 
 
