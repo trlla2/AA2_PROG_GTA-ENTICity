@@ -17,29 +17,50 @@ void Player::setMapRef(Map* map) {
 
 void Player::movement() { // reads user input and moves the player accordingly
     
-    if (GetAsyncKeyState(VK_UP))// arrow key up
-    {
-        Position newPos(pos.x - 1, pos.y);
+    if (currentCar != nullptr) {
+        // Car movement logic
+        Position currentCarPos = currentCar->GetPosition();
+        Position newCarPos = currentCarPos;
 
-        setNewPosition(newPos);
+        if (GetAsyncKeyState(VK_UP)) {
+            newCarPos = Position(currentCarPos.x - 1, currentCarPos.y);
+        }
+        else if (GetAsyncKeyState(VK_DOWN)) {
+            newCarPos = Position(currentCarPos.x + 1, currentCarPos.y);
+        }
+        else if (GetAsyncKeyState(VK_LEFT)) {
+            newCarPos = Position(currentCarPos.x, currentCarPos.y - 1);
+        }
+        else if (GetAsyncKeyState(VK_RIGHT)) {
+            newCarPos = Position(currentCarPos.x, currentCarPos.y + 1);
+        }
+        else if (GetAsyncKeyState('E')) { // exit car
+            Position exitPos = currentCar->ExitCar();
+            if (exitPos.x != -1 && exitPos.y != -1) {
+                pos = exitPos;
+                mapRef->checkNewPlayerPosition(exitPos); // Update player on map
+                currentCar = nullptr;
+            }
+            return;
+        }
     }
-    else if (GetAsyncKeyState(VK_DOWN))// arrow key down
-    {
-        Position newPos(pos.x + 1, pos.y);
-
-        setNewPosition(newPos);
-    }
-    else if (GetAsyncKeyState(VK_LEFT))// arrow key left
-    {
-        Position newPos(pos.x, pos.y - 1);
-
-        setNewPosition(newPos);
-    }
-    else if (GetAsyncKeyState(VK_RIGHT))// arrow key right
-    {
-        Position newPos(pos.x, pos.y + 1);
-
-        setNewPosition(newPos);
+    else {
+        if (GetAsyncKeyState(VK_UP)) {
+            Position newPos(pos.x - 1, pos.y);
+            setNewPosition(newPos);
+        }
+        else if (GetAsyncKeyState(VK_DOWN)) {
+            Position newPos(pos.x + 1, pos.y);
+            setNewPosition(newPos);
+        }
+        else if (GetAsyncKeyState(VK_LEFT)) {
+            Position newPos(pos.x, pos.y - 1);
+            setNewPosition(newPos);
+        }
+        else if (GetAsyncKeyState(VK_RIGHT)) {
+            Position newPos(pos.x, pos.y + 1);
+            setNewPosition(newPos);
+        }
     }
 }
 
@@ -71,6 +92,10 @@ void Player::GetInCar() {
 }
 
 Car* Player::GetCurrentCar() const { return currentCar; }
+
+bool Player::IsInCar() const {
+    return currentCar != nullptr;
+}
 
 void Player::setNewPosition(Position newPos) { // try to set the new position
     if (mapRef != nullptr) {

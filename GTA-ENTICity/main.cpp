@@ -23,6 +23,7 @@ int main() {
 		//INPUT
 		player->movement();
 		player->Attack();
+		player->GetInCar();
 		//UPDATE
 		for (int i = 0; i < config.numPedastriansSantos; i++) {
 			map->GetPeatonesLosSantos()[i].MovePeaton();

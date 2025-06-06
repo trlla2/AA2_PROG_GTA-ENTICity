@@ -69,9 +69,7 @@ Position Car::ExitCar()
 		int newX = pos.x + directions[i][0];
 		int newY = pos.y + directions[i][1];
 
-		if (newX >= 0 && newX < mapRef->getHeight() &&
-			newY >= 0 && newY < mapRef->getWidth() &&
-			mapRef->getBox()[newX][newY] == '.') {
+		if (newX >= 0 && newX < mapRef->getHeight() && newY >= 0 && newY < mapRef->getWidth() && mapRef->getBox()[newX][newY] == '.') {
 
 			isPlayerDriving = false;
 			mapRef->getBox()[pos.x][pos.y] = 'C';
@@ -84,7 +82,9 @@ Position Car::ExitCar()
 
 void Car::SetNewPosition(Position newPos) {
 	if (mapRef->checkNewCarPosition(newPos)) {
+		mapRef->getBox()[pos.x][pos.y] = '.';
 		pos = newPos;
+		mapRef->getBox()[pos.x][pos.y] = 'C';
 	}
 }
 

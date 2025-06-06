@@ -131,6 +131,7 @@ bool Map::checkNewCarPosition(Position newPos) {
 	box[carPos.x][carPos.y] = '.'; // clear old position box
 
 	box[newPos.x][newPos.y] = 'C';
+	return true;
 }
 
 Car* Map::FindNearestCar(Position playerPos) {
@@ -171,15 +172,40 @@ Car* Map::FindNearestCar(Position playerPos) {
 
 	if (!nearbyCars.empty()) {
 		int randomIndex = rand() % nearbyCars.size();
+		nearbyCars[randomIndex]->SetPlayerDriving(true);
 		return nearbyCars[randomIndex];
 	}
 
 	return nullptr;
 }
 
+void Map::HandleCarPedestrianCollision(Position carPos) {
+	if (box[carPos.x][carPos.y] == 'P') {
+
+		// Check Los Santos pedestrians
+		for (int i = 0; i < numPeatonesLosSantos; i++) {
+			if (peatonesLosSantos[i].GetPosition() == carPos) {
+				box[carPos.x][carPos.y] = '.';
+				peatonesLosSantos[i].Respawn(); 
+				break;
+			}
+		}
+
+		// Check San Fierro pedestrians
+		for (int i = 0; i < numPeatonesSanFierro; i++) {
+			if (peatonesSanFierro[i].GetPosition() == carPos) {
+				box[carPos.x][carPos.y] = '.';
+				peatonesSanFierro[i].Respawn(); 
+				break;
+			}
+		}
+	}
+}
+
+
 bool Map::SetNewPeatonPosition(Position newPos, Peaton *peaton)
 {
-	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'J' || box[newPos.x][newPos.y] == 'P' || box[newPos.x][newPos.y] == 'C' || newPos.y < (2 * getWidth())) {
+	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'J' || box[newPos.x][newPos.y] == 'P' || box[newPos.x][newPos.y] == 'C' || newPos.y > (2 * getWidth())) {
 		return false;
 	}
 
@@ -192,11 +218,12 @@ bool Map::SetNewPeatonPosition(Position newPos, Peaton *peaton)
 }
 
 void Map::printMap() {
-	// SeeDistance is a diagonal not a radius
-	// Player has to be on the center (on the center of seeDistance)
-	// printing start always will be playerPos -  seeDistance/2 or 0
-	// printing ends when I and J is equal playerPos + seeDistance/2 or are equal to height and widht
 	
+	if (!playerRef->IsInCar()) {
+		Position playerPos = playerRef->GetPosition();
+		box[playerPos.x][playerPos.y] = 'J';
+	}
+
 	Position playerPos = playerRef->GetPosition();
 	int startI = playerPos.x - seeDistance * 0.5f;
 	if (startI < 0)  startI = 0;

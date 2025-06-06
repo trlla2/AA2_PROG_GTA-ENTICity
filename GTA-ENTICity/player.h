@@ -25,6 +25,7 @@ public:
 	void Attack();
 	void GetInCar();
 	Car* GetCurrentCar() const;
+	bool IsInCar() const;
 	Position GetPosition() const;
 	int GetPlayerMoney() const;
 };
