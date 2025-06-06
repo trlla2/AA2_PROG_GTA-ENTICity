@@ -11,6 +11,7 @@ Peaton::Peaton()
 	zone = Zone::LOS_SANTOS;  
 
 	maxMoneyDrop = 10;  
+	attackTimer = 0.0f;
 }
 
 Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop, int attackDMG, int hp)
@@ -22,6 +23,7 @@ Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop, int at
 	damage = attackDMG;
 	maxHealth = hp;
 	health = maxHealth;
+	attackTimer = 0.0f;
 	behavior = (rand() % 2 == 0) ? NEUTRAL : AGGRESSIVE;
 	int minJ = 0;
 	int maxJ = 0;

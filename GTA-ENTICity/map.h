@@ -6,6 +6,8 @@
 #include "Peaton.h"
 #include "Money.h"
 #include "Zones.h"
+#include "BigSmoke.h"
+
 
 class Player; // declaracion anticipada para evitar dependencia circular
 class Peaton;
@@ -31,6 +33,7 @@ private:
 	Car* carsLosSantos;
 	Car* carsSanFierro;
 	Car* carsLasVenturas;
+	BigSmoke* bigSmoke;
 	int** moneyValues; // Matriz de valores del dinero
 
 	Player* playerRef;
@@ -58,7 +61,8 @@ public:
 	Car* GetCarsLosSantos() const;
 	Car* GetCarsSanFierro() const;
 	Car* GetCarsLasVenturas() const;
-	
+	BigSmoke* GetBigSmoke() const;
+
 	int CollectMoney(Position pos); 
 	int** GetMoneyValues() const;
 	~Map();

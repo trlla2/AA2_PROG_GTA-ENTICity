@@ -1,9 +1,9 @@
 #pragma once
 #include <Windows.h>
-#include "position.h"
-#include "player.h"
-#include "map.h"
-#include "zones.h"
+#include "Position.h"
+#include "Player.h"
+#include "Map.h"
+#include "Zones.h"
 
 //class Map;
 

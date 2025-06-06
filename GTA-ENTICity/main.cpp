@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Config.h"
 #include <Windows.h>
-#include "Peaton.h"
+
 
 
 int main() {
@@ -42,6 +42,9 @@ int main() {
 			map->GetPeatonesSanFierro()[i].MovePeaton();
 			map->GetPeatonesSanFierro()[i].UpdateAttackTimer(deltaTime);
 		}
+		map->GetBigSmoke()->MoveBigSmoke();
+		map->GetBigSmoke()->UpdateAttackTimer(deltaTime);
+
 		//RENDER
 		system("CLS");
 		map->printMap();

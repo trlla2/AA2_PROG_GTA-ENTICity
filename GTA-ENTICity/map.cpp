@@ -1,9 +1,10 @@
 #include "Map.h"
 #include "Car.h"
 #include "Player.h" // incluyo player para evitar dependencia circular
+#include "BigSmoke.h"
 
 Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int maxMoneyDropLS, int maxMoneyDropSF, int numCarsLS, int numCarsSF, int numCarsLV, int peatonDMGLS, int peatonDMGSF, int peatonHPLS, int peatonHPSF) {
-	
+
 	height = h;
 	width = w;
 	numPeatonesLosSantos = numPeatonesLS;
@@ -15,7 +16,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 	seeDistance = 10;
 
 	playerRef = player; // get player ref
-	
+
 
 	// Create the map boxes
 	box = new char* [height];
@@ -34,15 +35,15 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 		for (int j = 0; j < width; j++) {
 			// Verify if is wall
 			if (i == 0 || i == height - 1 || j == 0 || j == width - 1) {
-				box[i][j] = 'W'; 
+				box[i][j] = 'W';
 			}
-			else if (j == width / 3) { // Los Santos San Fierro diviison
-				if( i == toll1)
+			else if (j == width / 3) { // Los Santos San Fierro diviision
+				if (i == toll1)
 					box[i][j] = '.';
 				else
 					box[i][j] = 'W';
 			}
-			else if (j == 2 * width / 3) { //San Fierro  diviison
+			else if (j == 2 * width / 3) { //San Fierro  diviision
 				if (i == toll2)
 					box[i][j] = '.';
 				else
@@ -53,7 +54,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 			}
 		}
 	}
-	
+
 	// Set Player Pos --------------------------------- Debug
 	Position playerPos = playerRef->GetPosition();
 	box[playerPos.x][playerPos.y] = 'J';
@@ -97,21 +98,28 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 
 	peatonesSanFierro = new Peaton[numPeatonesSanFierro];
 	for (int i = 0; i < numPeatonesSanFierro; i++) {
-		tempPeaton = new Peaton(playerRef, this, Zone::SAN_FIERRO, maxMoneyDropSF, peatonDMGLS, peatonHPLS);
+		tempPeaton = new Peaton(playerRef, this, Zone::SAN_FIERRO, maxMoneyDropSF, peatonDMGSF, peatonHPSF);
 
 		if (peatonesSanFierro != nullptr) {
 			peatonesSanFierro[i] = *tempPeaton;
 		}
 	}
-	
+
+	// Create BigSmoke 
+	bigSmoke = new BigSmoke(playerRef, this);
+
 	moneyValues = new int* [height];
 	for (int i = 0; i < height; i++) {
 		moneyValues[i] = new int[width](); // Inicializar a 0
 	}
 }
 
-bool Map::checkNewPlayerPosition(Position newPosition){
-	if (box[newPosition.x][newPosition.y] == 'W' || box[newPosition.x][newPosition.y] == 'P' || box[newPosition.x][newPosition.y] == 'C') {
+bool Map::checkNewPlayerPosition(Position newPosition) {
+	
+	if (box[newPosition.x][newPosition.y] == 'W' ||
+		box[newPosition.x][newPosition.y] == 'P' ||
+		box[newPosition.x][newPosition.y] == 'C' ||
+		box[newPosition.x][newPosition.y] == 'B') {
 		return false;
 	}
 
@@ -119,12 +127,17 @@ bool Map::checkNewPlayerPosition(Position newPosition){
 	box[playerPos.x][playerPos.y] = '.'; // clear old position box
 
 	box[newPosition.x][newPosition.y] = 'J'; // print new position box
-	
+
 	return true;
 }
 
 bool Map::checkNewCarPosition(Position newPos) {
-	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'C' || newPos.x < 0 || newPos.x >= height || newPos.y < 0 || newPos.y >= width) {
+	
+	if (box[newPos.x][newPos.y] == 'W' ||
+		box[newPos.x][newPos.y] == 'C' ||
+		box[newPos.x][newPos.y] == 'B' ||
+		newPos.x < 0 || newPos.x >= height ||
+		newPos.y < 0 || newPos.y >= width) {
 		return false;
 	}
 	return true;
@@ -183,17 +196,17 @@ void Map::HandleCarPedestrianCollision(Position carPos) {
 		for (int i = 0; i < numPeatonesLosSantos; i++) {
 			if (peatonesLosSantos[i].GetPosition() == carPos) {
 				hitPedestrian = &peatonesLosSantos[i];
-				maxMoneyDrop = 10; 
+				maxMoneyDrop = 10;
 				break;
 			}
 		}
 
-		
+
 		if (hitPedestrian == nullptr) {
 			for (int i = 0; i < numPeatonesSanFierro; i++) {
 				if (peatonesSanFierro[i].GetPosition() == carPos) {
 					hitPedestrian = &peatonesSanFierro[i];
-					maxMoneyDrop = 16; 
+					maxMoneyDrop = 16;
 					break;
 				}
 			}
@@ -229,9 +242,14 @@ void Map::HandleCarPedestrianCollision(Position carPos) {
 }
 
 
-bool Map::SetNewPeatonPosition(Position newPos, Peaton *peaton)
+bool Map::SetNewPeatonPosition(Position newPos, Peaton* peaton)
 {
-	if (box[newPos.x][newPos.y] == 'W' || box[newPos.x][newPos.y] == 'J' || box[newPos.x][newPos.y] == 'P' || box[newPos.x][newPos.y] == 'C' || newPos.y > (2 * getWidth())) {
+	if (box[newPos.x][newPos.y] == 'W' ||
+		box[newPos.x][newPos.y] == 'J' ||
+		box[newPos.x][newPos.y] == 'P' ||
+		box[newPos.x][newPos.y] == 'C' ||
+		box[newPos.x][newPos.y] == 'B' ||
+		newPos.y > (2 * getWidth())) {
 		return false;
 	}
 
@@ -244,18 +262,16 @@ bool Map::SetNewPeatonPosition(Position newPos, Peaton *peaton)
 }
 
 void Map::printMap() {
-	// Solo mostrar al jugador si no está en un coche
+	
 	if (!playerRef->IsInCar()) {
 		Position playerPos = playerRef->GetPosition();
 		box[playerPos.x][playerPos.y] = 'J';
 	}
 	else {
-		// Si está en coche, mostrar el coche en su posición
 		Position carPos = playerRef->GetCurrentCar()->GetPosition();
 		box[carPos.x][carPos.y] = 'C';
 	}
 
-	// Actualizar posiciones de peatones
 	for (int i = 0; i < numPeatonesLosSantos; i++) {
 		Position peatonPos = peatonesLosSantos[i].GetPosition();
 		if (box[peatonPos.x][peatonPos.y] == '.') {
@@ -267,6 +283,13 @@ void Map::printMap() {
 		Position peatonPos = peatonesSanFierro[i].GetPosition();
 		if (box[peatonPos.x][peatonPos.y] == '.') {
 			box[peatonPos.x][peatonPos.y] = 'P';
+		}
+	}
+
+	if (bigSmoke != nullptr && bigSmoke->IsAlive()) {
+		Position bigSmokePos = bigSmoke->GetPosition();
+		if (box[bigSmokePos.x][bigSmokePos.y] == '.') {
+			box[bigSmokePos.x][bigSmokePos.y] = 'B';
 		}
 	}
 
@@ -295,6 +318,9 @@ void Map::printMap() {
 	if (playerRef->IsInCar()) {
 		std::cout << "Driving - Press E to exit the car" << std::endl;
 	}
+
+	std::cout << bigSmoke->IsAlive() << std::endl;
+	
 }
 
 
@@ -317,11 +343,13 @@ Car* Map::GetCarsLosSantos() const { return carsLosSantos; }
 Car* Map::GetCarsSanFierro() const { return carsSanFierro; }
 Car* Map::GetCarsLasVenturas() const { return carsLasVenturas; }
 
+BigSmoke* Map::GetBigSmoke() const { return bigSmoke; }
+
 int Map::CollectMoney(Position pos) {
 	if (box[pos.x][pos.y] == '$') {
 		int value = moneyValues[pos.x][pos.y];
 		moneyValues[pos.x][pos.y] = 0; // Resetear valor
-		box[pos.x][pos.y] = '.'; // Quitar s�mbolo
+		box[pos.x][pos.y] = '.'; // Quitar símbolo
 		return value;
 	}
 	return 0;
@@ -339,4 +367,8 @@ Map::~Map() {
 		delete[] moneyValues[i];
 	}
 	delete[] moneyValues;
+
+	if (bigSmoke != nullptr) {
+		delete bigSmoke;
+	}
 }

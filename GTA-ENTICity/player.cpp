@@ -99,6 +99,15 @@ void Player::Attack()
                 break;
             }
         }
+
+        // Atacar a BigSmoke si está cerca
+        if (mapRef->GetBigSmoke() != nullptr && mapRef->GetBigSmoke()->IsAlive()) {
+            if (mapRef->GetBigSmoke()->IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {
+                mapRef->GetBigSmoke()->TakeDamage(attackPower);
+                
+                return;
+            }
+        }
     }
 }
 
