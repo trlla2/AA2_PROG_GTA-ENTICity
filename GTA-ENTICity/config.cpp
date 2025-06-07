@@ -28,7 +28,7 @@ Config::Config(std::string fileName) {
 	}
 	archive.close();
 
-	if (values.size() < 11) {
+	if (values.size() < 20) {
 		std::cout << "ERROR: NOT ENOUGH VALUES (NEED 20 VALUES)" << std::endl;
 		return;
 	}
