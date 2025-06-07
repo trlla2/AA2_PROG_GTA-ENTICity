@@ -20,6 +20,7 @@ private:
 	int width;
 	int numPeatonesLosSantos;
 	int numPeatonesSanFierro;
+	int numPeatonesLasVenturas;
 	int numCarsLosSantos;
 	int numCarsSanFierro;
 	int numCarsLasVenturas;
@@ -38,6 +39,7 @@ private:
 
 	Peaton* peatonesLosSantos;
 	Peaton* peatonesSanFierro;
+	Peaton* peatonesLasVenturas;
 	Car* carsLosSantos;
 	Car* carsSanFierro;
 	Car* carsLasVenturas;
@@ -50,7 +52,7 @@ private:
 
 	int seeDistance;
 public:
-	Map(Player* player, int h, int w , int numPeatonesSantos, int numPeatonesFierro, int maxMoneyDropLS, int maxMoneyDropSF, int numCarsLS, int numCarsSF, int numCarsLV, int peatonDMGLS, int peatonDMGSF, int peatonHPLS, int peatonHPSF);
+	Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int numPeatonesLV, int maxMoneyDropLS, int maxMoneyDropSF, int maxMoneyDropLV, int numCarsLS, int numCarsSF, int numCarsLV, int peatonDMGLS, int peatonDMGSF, int peatonDMGLV, int peatonHPLS, int peatonHPSF, int peatonHPLV, int toll1Cost, int toll2Cost);
 	 
 	bool checkNewPlayerPosition(Position newPos);
 	bool checkNewCarPosition(Position newPos);
@@ -63,8 +65,10 @@ public:
 	char** getBox() const;
 	int GetNumPeatonesLosSantos() const;
 	int GetNumPeatonesSanFierro()const;
+	int GetNumPeatonesLasVenturas() const;
 	Peaton* GetPeatonesLosSantos() const;
 	Peaton* GetPeatonesSanFierro()const;
+	Peaton* GetPeatonesLasVenturas() const;
 	int GetNumCarsLosSantos() const;
 	int GetNumCarsSanFierro() const;
 	int GetNumCarsLasVenturas() const;

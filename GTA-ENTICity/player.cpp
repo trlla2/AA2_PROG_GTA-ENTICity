@@ -101,6 +101,17 @@ void Player::Attack()
             }
         }
 
+        for (int i = 0; i < mapRef->GetNumPeatonesLasVenturas(); i++) {
+            Peaton& p = mapRef->GetPeatonesLasVenturas()[i];
+            if (p.IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {
+                p.TakeDamage(attackPower);
+                if (!p.IsAlive()) {
+                    p.Respawn();
+                }
+                break;
+            }
+        }
+
         // Atacar a BigSmoke si está cerca
         if (mapRef->GetBigSmoke() != nullptr && mapRef->GetBigSmoke()->IsAlive()) {
             if (mapRef->GetBigSmoke()->IsNearToPlayer() && GetAsyncKeyState(VK_SPACE)) {

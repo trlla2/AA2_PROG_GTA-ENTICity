@@ -112,7 +112,7 @@ void Manager::Menu() {
 					delete player;
 
 				player = new Player(config->playerMaxHealth, config->playerAttackPower);
-				map = new Map(player, config->height, config->width, config->numPedestriansLosSantos, config->numPedestriansSanFierro, config->maxMoneyDropPedestriansLosSantos, config->maxMoneyDropPedestriansSanFierro, config->numCarsLosSantos, config->numCarsSanFierro, config->numCarsLasVenturas, config->damageToPlayerLosSantos, config->damageToPlayerSanFierro, config->pedestrianHealthLosSantos, config->pedestrianHealthSanFierro);
+				map = new Map(player, config->height, config->width, config->numPedestriansLosSantos, config->numPedestriansSanFierro, config->numPedestriansLasVenturas, config->maxMoneyDropPedestriansLosSantos, config->maxMoneyDropPedestriansSanFierro, config->maxMoneyDropPedestriansLasVenturas, config->numCarsLosSantos, config->numCarsSanFierro, config->numCarsLasVenturas, config->damageToPlayerLosSantos, config->damageToPlayerSanFierro, config->damageToPlayerLasVenturas, config->pedestrianHealthLosSantos, config->pedestrianHealthSanFierro, config->pedestrianHealthLasVenturas, config->toll1Cost, config->toll2Cost);
 				player->setMapRef(map);
 
 				actualScene = GAMEPLAY;
@@ -150,6 +150,11 @@ void Manager::Gameplay() {
 		map->GetPeatonesSanFierro()[i].MovePeaton();
 		map->GetPeatonesSanFierro()[i].UpdateAttackTimer(deltaTime);
 	}
+	for (int i = 0; i < config->numPedestriansLasVenturas; i++) {
+		map->GetPeatonesLasVenturas()[i].MovePeaton();
+		map->GetPeatonesLasVenturas()[i].UpdateAttackTimer(deltaTime);
+	}
+
 	map->GetBigSmoke()->MoveBigSmoke();
 	map->GetBigSmoke()->UpdateAttackTimer(deltaTime);
 

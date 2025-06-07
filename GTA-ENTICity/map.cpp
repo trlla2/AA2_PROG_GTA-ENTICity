@@ -3,7 +3,7 @@
 #include "Player.h" // incluyo player para evitar dependencia circular
 #include "BigSmoke.h"
 
-Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int maxMoneyDropLS, int maxMoneyDropSF, int numCarsLS, int numCarsSF, int numCarsLV, int peatonDMGLS, int peatonDMGSF, int peatonHPLS, int peatonHPSF) {
+Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int numPeatonesLV, int maxMoneyDropLS, int maxMoneyDropSF, int maxMoneyDropLV, int numCarsLS, int numCarsSF, int numCarsLV, int peatonDMGLS, int peatonDMGSF, int peatonDMGLV, int peatonHPLS, int peatonHPSF, int peatonHPLV, int toll1Cost, int toll2Cost){
 
 	height = h;
 	width = w;
@@ -60,7 +60,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 		}
 	}
 
-	// Set Player Pos --------------------------------- Debug
+	// Set Player Pos
 	Position playerPos = playerRef->GetPosition();
 	box[playerPos.x][playerPos.y] = 'J';
 
@@ -107,6 +107,14 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 
 		if (peatonesSanFierro != nullptr) {
 			peatonesSanFierro[i] = *tempPeaton;
+		}
+	}
+
+	peatonesLasVenturas = new Peaton[numPeatonesLasVenturas];
+	for (int i = 0; i < numPeatonesLasVenturas; i++) {
+		tempPeaton = new Peaton(playerRef, this, Zone::LAS_VENTURAS, maxMoneyDropLV, peatonDMGLV, peatonHPLV);
+		if (peatonesLasVenturas != nullptr) {
+			peatonesLasVenturas[i] = *tempPeaton;
 		}
 	}
 
@@ -336,6 +344,13 @@ void Map::printMap() {
 		}
 	}
 
+	for (int i = 0; i < numPeatonesLasVenturas; i++) {
+		Position peatonPos = peatonesLasVenturas[i].GetPosition();
+		if (box[peatonPos.x][peatonPos.y] == '.') {
+			box[peatonPos.x][peatonPos.y] = 'P';
+		}
+	}
+
 	if (bigSmoke != nullptr && bigSmoke->IsAlive()) {
 		Position bigSmokePos = bigSmoke->GetPosition();
 		if (box[bigSmokePos.x][bigSmokePos.y] == '.') {
@@ -376,12 +391,12 @@ int Map::getWidth() const { return width; }
 char** Map::getBox() const { return box; }
 
 int Map::GetNumPeatonesLosSantos() const { return numPeatonesLosSantos; }
-
 int Map::GetNumPeatonesSanFierro() const { return numPeatonesSanFierro; }
+int Map::GetNumPeatonesLasVenturas() const { return numPeatonesLasVenturas; }
 
 Peaton* Map::GetPeatonesLosSantos() const { return peatonesLosSantos; }
-
 Peaton* Map::GetPeatonesSanFierro() const { return peatonesSanFierro; }
+Peaton* Map::GetPeatonesLasVenturas() const { return peatonesLasVenturas; }
 
 int Map::GetNumCarsLosSantos() const { return numCarsLosSantos; }
 int Map::GetNumCarsSanFierro() const { return numCarsSanFierro; }

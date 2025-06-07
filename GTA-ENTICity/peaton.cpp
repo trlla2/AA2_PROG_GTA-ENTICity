@@ -29,11 +29,15 @@ Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop, int at
 	int maxJ = 0;
 	if (zone == Zone::LOS_SANTOS) {
 		minJ = 1;
-		maxJ = mapRef->getWidth() / 3 - 1; // Primer tercio
+		maxJ = mapRef->getWidth() / 3 - 1; 
 	}
 	else if (zone == Zone::SAN_FIERRO) {
-		minJ = mapRef->getWidth() / 3 + 1; // Segundo tercio
+		minJ = mapRef->getWidth() / 3 + 1; 
 		maxJ = 2 * (mapRef->getWidth() / 3) - 1;
+	}
+	else if (zone == Zone::LAS_VENTURAS) {
+		minJ = 2 * (mapRef->getWidth() / 3) + 1;
+		maxJ = mapRef->getWidth() - 2;
 	}
 
 	bool instancedPeaton = false;
@@ -151,6 +155,10 @@ void Peaton::Respawn()
 	else if (zone == Zone::SAN_FIERRO){
 		minJ = mapRef->getWidth() / 3 + 1;
 		maxJ = 2 * (mapRef->getWidth() / 3) - 1;
+	}
+	else if (zone == Zone::LAS_VENTURAS) {
+		minJ = 2 * (mapRef->getWidth() / 3) + 1; 
+		maxJ = mapRef->getWidth() - 2;
 	}
 
 	bool instancedPeaton = false;
