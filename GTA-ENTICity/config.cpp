@@ -1,5 +1,7 @@
 #include "Config.h"
 
+Config::Config(){ }
+
 Config::Config(std::string fileName) {
 	// Read de config.txt file
 	std::vector<int> values;

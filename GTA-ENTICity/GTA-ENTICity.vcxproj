@@ -131,6 +131,7 @@
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Peaton.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="BigSmoke.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Peaton.h" />
     <ClInclude Include="Player.h" />

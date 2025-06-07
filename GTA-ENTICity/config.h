@@ -26,5 +26,6 @@ struct Config
 	int playerAttackPower;
 	int playerMaxHealth;
 
+	Config();
 	Config(std::string fileName);
 };

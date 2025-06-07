@@ -363,7 +363,7 @@ void Map::printMap() {
 		std::cout << std::endl;
 	}
 
-	std::cout << "\nDinero: $" << playerRef->GetPlayerMoney() << std::endl;
+	std::cout << "\Money: $" << playerRef->GetPlayerMoney() << std::endl;
 
 	if (playerRef->IsInCar()) {
 		std::cout << "Driving - Press E to exit the car" << std::endl;
