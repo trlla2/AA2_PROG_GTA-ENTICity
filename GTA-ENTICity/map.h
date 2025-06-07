@@ -54,15 +54,15 @@ private:
 public:
 	Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int numPeatonesLV, int maxMoneyDropLS, int maxMoneyDropSF, int maxMoneyDropLV, int numCarsLS, int numCarsSF, int numCarsLV, int peatonDMGLS, int peatonDMGSF, int peatonDMGLV, int peatonHPLS, int peatonHPSF, int peatonHPLV, int toll1Cost, int toll2Cost);
 	 
-	bool checkNewPlayerPosition(Position newPos);
-	bool checkNewCarPosition(Position newPos);
+	bool CheckNewPlayerPosition(Position newPos);
+	bool CheckNewCarPosition(Position newPos);
 	Car* FindNearestCar(Position playerPos);
 	void HandleCarPedestrianCollision(Position carPos);
 	bool SetNewPeatonPosition(Position newPos, Peaton* peaton);
-	void printMap();
-	int getHeight() const;
-	int getWidth() const;
-	char** getBox() const;
+	void PrintMap();
+	int GetHeight() const;
+	int GetWidth() const;
+	char** GetBox() const;
 	int GetNumPeatonesLosSantos() const;
 	int GetNumPeatonesSanFierro()const;
 	int GetNumPeatonesLasVenturas() const;

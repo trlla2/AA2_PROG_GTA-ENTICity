@@ -129,7 +129,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 	}
 }
 
-bool Map::checkNewPlayerPosition(Position newPos) {
+bool Map::CheckNewPlayerPosition(Position newPos) {
 	
 	if (box[newPos.x][newPos.y] == 'X' ||
 		box[newPos.x][newPos.y] == 'P' ||
@@ -169,7 +169,7 @@ bool Map::checkNewPlayerPosition(Position newPos) {
 	return true;
 }
 
-bool Map::checkNewCarPosition(Position newPos) {
+bool Map::CheckNewCarPosition(Position newPos) {
 	
 	if (box[newPos.x][newPos.y] == 'X' ||
 		box[newPos.x][newPos.y] == 'C' ||
@@ -312,7 +312,7 @@ bool Map::SetNewPeatonPosition(Position newPos, Peaton* peaton)
 		box[newPos.x][newPos.y] == 'P' ||
 		box[newPos.x][newPos.y] == 'C' ||
 		box[newPos.x][newPos.y] == 'B' ||
-		newPos.y > (2 * getWidth())) {
+		newPos.y > (2 * GetWidth())) {
 		return false;
 	}
 
@@ -324,7 +324,7 @@ bool Map::SetNewPeatonPosition(Position newPos, Peaton* peaton)
 	return true;
 }
 
-void Map::printMap() {
+void Map::PrintMap() {
 	
 	Position toll1Pos(toll1, width / 3);
 	Position toll2Pos(toll2, 2 * width / 3);
@@ -401,9 +401,9 @@ void Map::printMap() {
 }
 
 
-int Map::getHeight() const { return height; }
-int Map::getWidth() const { return width; }
-char** Map::getBox() const { return box; }
+int Map::GetHeight() const { return height; }
+int Map::GetWidth() const { return width; }
+char** Map::GetBox() const { return box; }
 
 int Map::GetNumPeatonesLosSantos() const { return numPeatonesLosSantos; }
 int Map::GetNumPeatonesSanFierro() const { return numPeatonesSanFierro; }

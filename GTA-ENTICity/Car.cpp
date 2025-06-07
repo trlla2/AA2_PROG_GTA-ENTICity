@@ -27,31 +27,31 @@ Car::Car(Player* player, Map* map, Zone carZone) {
 	{
 	case Zone::LOS_SANTOS:
 		minY = 1;
-		maxY = (mapRef->getWidth() / 3) - 1;
+		maxY = (mapRef->GetWidth() / 3) - 1;
 		break;
 	case Zone::SAN_FIERRO:
-		minY = (mapRef->getWidth() / 3) + 1;
-		maxY =  2 * (mapRef->getWidth() / 3) - 1;
+		minY = (mapRef->GetWidth() / 3) + 1;
+		maxY =  2 * (mapRef->GetWidth() / 3) - 1;
 		break;
 	case Zone::LAS_VENTURAS:
-		minY = 2 * (mapRef->getWidth() / 3) + 1;
-		maxY = mapRef->getWidth() - 2;
+		minY = 2 * (mapRef->GetWidth() / 3) + 1;
+		maxY = mapRef->GetWidth() - 2;
 		break;
 	default:// if there is no zone spawn on losSantos
 		minY = 1;
-		maxY = (mapRef->getWidth() / 3) - 1;
+		maxY = (mapRef->GetWidth() / 3) - 1;
 		break;
 	}
 
 	bool carPlaced = false;
 	while (!carPlaced) {
-		int checkPosX = GenerateClampedRandom(1, mapRef->getHeight() - 2);
+		int checkPosX = GenerateClampedRandom(1, mapRef->GetHeight() - 2);
 		int checkPosY = GenerateClampedRandom(minY, maxY);
 
-		if (mapRef->getBox()[checkPosX][checkPosY] == '.') {
+		if (mapRef->GetBox()[checkPosX][checkPosY] == '.') {
 			pos.x = checkPosX;
 			pos.y = checkPosY;
-			mapRef->getBox()[pos.x][pos.y] = 'C';
+			mapRef->GetBox()[pos.x][pos.y] = 'C';
 			carPlaced = true;
 		}
 	}
@@ -69,10 +69,10 @@ Position Car::ExitCar()
 		int newX = pos.x + directions[i][0];
 		int newY = pos.y + directions[i][1];
 
-		if (newX >= 0 && newX < mapRef->getHeight() && newY >= 0 && newY < mapRef->getWidth() && mapRef->getBox()[newX][newY] == '.') {
+		if (newX >= 0 && newX < mapRef->GetHeight() && newY >= 0 && newY < mapRef->GetWidth() && mapRef->GetBox()[newX][newY] == '.') {
 
 			isPlayerDriving = false;
-			mapRef->getBox()[pos.x][pos.y] = 'C';
+			mapRef->GetBox()[pos.x][pos.y] = 'C';
 			return Position(newX, newY);
 		}
 	}
@@ -81,10 +81,10 @@ Position Car::ExitCar()
 }
 
 void Car::SetNewPosition(Position newPos) {
-	if (mapRef->checkNewCarPosition(newPos)) {
-		mapRef->getBox()[pos.x][pos.y] = '.';
+	if (mapRef->CheckNewCarPosition(newPos)) {
+		mapRef->GetBox()[pos.x][pos.y] = '.';
 		pos = newPos;
-		mapRef->getBox()[pos.x][pos.y] = 'C';
+		mapRef->GetBox()[pos.x][pos.y] = 'C';
 	}
 }
 

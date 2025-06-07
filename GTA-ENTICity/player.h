@@ -25,8 +25,8 @@ private:
 
 public:
 	Player(int maxHP, int attackPwr);
-	void setMapRef(Map* map);
-	void movement();
+	void SetMapRef(Map* map);
+	void Movement();
 	void Attack();
 	void GetInCar();
 	Car* GetCurrentCar() const;

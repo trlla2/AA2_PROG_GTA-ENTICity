@@ -15,11 +15,11 @@ Player::Player(int maxHP, int attackPwr) {
     pos.y = 4;
 }
 
-void Player::setMapRef(Map* map) {
+void Player::SetMapRef(Map* map) {
     mapRef = map; // Get Map ref
 }
 
-void Player::movement() { // reads user input and moves the player accordingly
+void Player::Movement() { // reads user input and moves the player accordingly
 
     if (currentCar != nullptr) {
         // Car movement logic
@@ -29,7 +29,7 @@ void Player::movement() { // reads user input and moves the player accordingly
         if (GetAsyncKeyState(VK_UP)) {
             currentDirection = UP;
             newCarPos = Position(currentCarPos.x - 1, currentCarPos.y);
-            if (mapRef->checkNewCarPosition(newCarPos)) {
+            if (mapRef->CheckNewCarPosition(newCarPos)) {
                 // Verificar si hay peatón en la nueva posición antes de mover
                 mapRef->HandleCarPedestrianCollision(newCarPos);
                 currentCar->SetNewPosition(newCarPos);
@@ -38,7 +38,7 @@ void Player::movement() { // reads user input and moves the player accordingly
         else if (GetAsyncKeyState(VK_DOWN)) {
             currentDirection = DOWN;
             newCarPos = Position(currentCarPos.x + 1, currentCarPos.y);
-            if (mapRef->checkNewCarPosition(newCarPos)) {
+            if (mapRef->CheckNewCarPosition(newCarPos)) {
                 mapRef->HandleCarPedestrianCollision(newCarPos);
                 currentCar->SetNewPosition(newCarPos);
             }
@@ -46,7 +46,7 @@ void Player::movement() { // reads user input and moves the player accordingly
         else if (GetAsyncKeyState(VK_LEFT)) {
             currentDirection = LEFT;
             newCarPos = Position(currentCarPos.x, currentCarPos.y - 1);
-            if (mapRef->checkNewCarPosition(newCarPos)) {
+            if (mapRef->CheckNewCarPosition(newCarPos)) {
                 mapRef->HandleCarPedestrianCollision(newCarPos);
                 currentCar->SetNewPosition(newCarPos);
             }
@@ -54,7 +54,7 @@ void Player::movement() { // reads user input and moves the player accordingly
         else if (GetAsyncKeyState(VK_RIGHT)) {
             currentDirection = RIGHT;
             newCarPos = Position(currentCarPos.x, currentCarPos.y + 1);
-            if (mapRef->checkNewCarPosition(newCarPos)) {
+            if (mapRef->CheckNewCarPosition(newCarPos)) {
                 mapRef->HandleCarPedestrianCollision(newCarPos);
                 currentCar->SetNewPosition(newCarPos);
             }
@@ -137,13 +137,13 @@ void Player::GetInCar() {
             currentCar = mapRef->FindNearestCar(pos);
 
             // Ocultar al jugador del mapa cuando se sube al coche
-            mapRef->getBox()[pos.x][pos.y] = '.';
+            mapRef->GetBox()[pos.x][pos.y] = '.';
         }
         else {
             Position exitPos = currentCar->ExitCar();
             if (exitPos.x != -1 && exitPos.y != -1) {
                 pos = exitPos;
-                mapRef->checkNewPlayerPosition(exitPos); // Update player on map
+                mapRef->CheckNewPlayerPosition(exitPos); // Update player on map
                 currentCar = nullptr;
             }
         }
@@ -163,7 +163,7 @@ void Player::setNewPosition(Position newPos) { // try to set the new position
             playerMoney += mapRef->CollectMoney(newPos);
         }
 
-        if (mapRef->checkNewPlayerPosition(newPos)) {
+        if (mapRef->CheckNewPlayerPosition(newPos)) {
             pos = newPos;
         }
     }

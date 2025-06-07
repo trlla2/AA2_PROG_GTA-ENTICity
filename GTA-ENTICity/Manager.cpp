@@ -113,7 +113,7 @@ void Manager::Menu() {
 
 				player = new Player(config->playerMaxHealth, config->playerAttackPower);
 				map = new Map(player, config->height, config->width, config->numPedestriansLosSantos, config->numPedestriansSanFierro, config->numPedestriansLasVenturas, config->maxMoneyDropPedestriansLosSantos, config->maxMoneyDropPedestriansSanFierro, config->maxMoneyDropPedestriansLasVenturas, config->numCarsLosSantos, config->numCarsSanFierro, config->numCarsLasVenturas, config->damageToPlayerLosSantos, config->damageToPlayerSanFierro, config->damageToPlayerLasVenturas, config->pedestrianHealthLosSantos, config->pedestrianHealthSanFierro, config->pedestrianHealthLasVenturas, config->toll1Cost, config->toll2Cost);
-				player->setMapRef(map);
+				player->SetMapRef(map);
 
 				actualScene = GAMEPLAY;
 
@@ -131,7 +131,7 @@ void Manager::Menu() {
 
 void Manager::Gameplay() {
 	//INPUT
-	player->movement();
+	player->Movement();
 	player->Attack();
 	player->GetInCar();
 
@@ -181,7 +181,7 @@ void Manager::Gameplay() {
 
 	//RENDER
 	system("CLS");
-	map->printMap();
+	map->PrintMap();
 	std::cout << "Current Health: " << player->GetHealth() << std::endl;
 
 }

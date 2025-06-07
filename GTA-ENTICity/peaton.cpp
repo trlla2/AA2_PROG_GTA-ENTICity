@@ -29,26 +29,26 @@ Peaton::Peaton(Player* player, Map* map, Zone peatonZone, int maxMonDrop, int at
 	int maxJ = 0;
 	if (zone == Zone::LOS_SANTOS) {
 		minJ = 1;
-		maxJ = mapRef->getWidth() / 3 - 1; 
+		maxJ = mapRef->GetWidth() / 3 - 1; 
 	}
 	else if (zone == Zone::SAN_FIERRO) {
-		minJ = mapRef->getWidth() / 3 + 1; 
-		maxJ = 2 * (mapRef->getWidth() / 3) - 1;
+		minJ = mapRef->GetWidth() / 3 + 1; 
+		maxJ = 2 * (mapRef->GetWidth() / 3) - 1;
 	}
 	else if (zone == Zone::LAS_VENTURAS) {
-		minJ = 2 * (mapRef->getWidth() / 3) + 1;
-		maxJ = mapRef->getWidth() - 2;
+		minJ = 2 * (mapRef->GetWidth() / 3) + 1;
+		maxJ = mapRef->GetWidth() - 2;
 	}
 
 	bool instancedPeaton = false;
 	int checkPosX = 0;
 	int checkPosY = 0;
 	while (!instancedPeaton) {
-		checkPosX = rand() % (mapRef->getHeight() - 2) + 1; // Evitar bordes
+		checkPosX = rand() % (mapRef->GetHeight() - 2) + 1; // Evitar bordes
 		checkPosY = rand() % (maxJ - minJ) + minJ; // J dentro de su zona
 		
-		if (mapRef->getBox()[checkPosX][checkPosY] != NULL) {
-			if (mapRef->getBox()[checkPosX][checkPosY] == '.') {
+		if (mapRef->GetBox()[checkPosX][checkPosY] != NULL) {
+			if (mapRef->GetBox()[checkPosX][checkPosY] == '.') {
 				pos.x = checkPosX;
 				pos.y = checkPosY;
 				instancedPeaton = true;
@@ -64,10 +64,10 @@ Peaton::~Peaton()
 	int checkPosX = 0;
 	int checkPosY = 0;
 	while (instancedPeaton == false) {
-		checkPosX = rand() % mapRef->getWidth();
-		checkPosY = rand() % mapRef->getHeight();
+		checkPosX = rand() % mapRef->GetWidth();
+		checkPosY = rand() % mapRef->GetHeight();
 
-		if (mapRef->getBox()[pos.x][pos.y] == '.') {
+		if (mapRef->GetBox()[pos.x][pos.y] == '.') {
 			pos.x = checkPosX;
 			pos.y = checkPosY;
 			instancedPeaton = true;
@@ -150,30 +150,30 @@ void Peaton::Respawn()
 	int maxJ = 0;
 	if (zone == Zone::LOS_SANTOS) {
 		minJ = 1;
-		maxJ = mapRef->getWidth() / 3 - 1;
+		maxJ = mapRef->GetWidth() / 3 - 1;
 	}
 	else if (zone == Zone::SAN_FIERRO){
-		minJ = mapRef->getWidth() / 3 + 1;
-		maxJ = 2 * (mapRef->getWidth() / 3) - 1;
+		minJ = mapRef->GetWidth() / 3 + 1;
+		maxJ = 2 * (mapRef->GetWidth() / 3) - 1;
 	}
 	else if (zone == Zone::LAS_VENTURAS) {
-		minJ = 2 * (mapRef->getWidth() / 3) + 1; 
-		maxJ = mapRef->getWidth() - 2;
+		minJ = 2 * (mapRef->GetWidth() / 3) + 1; 
+		maxJ = mapRef->GetWidth() - 2;
 	}
 
 	bool instancedPeaton = false;
 	while (!instancedPeaton) {
-		int newX = rand() % (mapRef->getHeight() - 2) + 1;
+		int newX = rand() % (mapRef->GetHeight() - 2) + 1;
 		int newY = rand() % (maxJ - minJ) + minJ;
 
-		if (mapRef->getBox()[newX][newY] == '.') {
+		if (mapRef->GetBox()[newX][newY] == '.') {
 			Position oldPos = pos;
 
 			// Generar dinero según zona
 			int moneyValue = rand() % maxMoneyDrop + 1;
 			
 
-			mapRef->getBox()[oldPos.x][oldPos.y] = '$';
+			mapRef->GetBox()[oldPos.x][oldPos.y] = '$';
 			mapRef->GetMoneyValues()[oldPos.x][oldPos.y] = moneyValue;
 
 			pos.x = newX;

@@ -29,15 +29,15 @@ BigSmoke::BigSmoke(Player* player, Map* map)
     isAlive = true;
 
     // Spawner en Las Venturas (tercera zona)
-    int minY = 2 * (mapRef->getWidth() / 3) + 1;
-    int maxY = mapRef->getWidth() - 2;
+    int minY = 2 * (mapRef->GetWidth() / 3) + 1;
+    int maxY = mapRef->GetWidth() - 2;
 
     bool bigSmokeSpawned = false;
     while (!bigSmokeSpawned) {
-        int checkPosX = GenerateClampedRandom(1, mapRef->getHeight() - 2);
+        int checkPosX = GenerateClampedRandom(1, mapRef->GetHeight() - 2);
         int checkPosY = GenerateClampedRandom(minY, maxY);
 
-        if (mapRef->getBox()[checkPosX][checkPosY] == '.') {
+        if (mapRef->GetBox()[checkPosX][checkPosY] == '.') {
             pos.x = checkPosX;
             pos.y = checkPosY;
             bigSmokeSpawned = true;
@@ -80,21 +80,21 @@ void BigSmoke::MoveBigSmoke()
         }
 
         // Verificar que la nueva posición sea válida y dentro de Las Venturas
-        int minY = 2 * (mapRef->getWidth() / 3) + 1;
-        int maxY = mapRef->getWidth() - 2;
+        int minY = 2 * (mapRef->GetWidth() / 3) + 1;
+        int maxY = mapRef->GetWidth() - 2;
 
-        if (newPos.x >= 1 && newPos.x < mapRef->getHeight() - 1 &&
+        if (newPos.x >= 1 && newPos.x < mapRef->GetHeight() - 1 &&
             newPos.y >= minY && newPos.y <= maxY &&
-            mapRef->getBox()[newPos.x][newPos.y] != 'X' &&
-            mapRef->getBox()[newPos.x][newPos.y] != 'P' &&
-            mapRef->getBox()[newPos.x][newPos.y] != 'C' &&
-            (mapRef->getBox()[newPos.x][newPos.y] == '^' ||
-             mapRef->getBox()[newPos.x][newPos.y] == 'v' ||
-             mapRef->getBox()[newPos.x][newPos.y] == '<' ||
-             mapRef->getBox()[newPos.x][newPos.y] == '>' ) ) {
+            mapRef->GetBox()[newPos.x][newPos.y] != 'X' &&
+            mapRef->GetBox()[newPos.x][newPos.y] != 'P' &&
+            mapRef->GetBox()[newPos.x][newPos.y] != 'C' &&
+            (mapRef->GetBox()[newPos.x][newPos.y] == '^' ||
+             mapRef->GetBox()[newPos.x][newPos.y] == 'v' ||
+             mapRef->GetBox()[newPos.x][newPos.y] == '<' ||
+             mapRef->GetBox()[newPos.x][newPos.y] == '>' ) ) {
 
             // Limpiar posición anterior
-            mapRef->getBox()[pos.x][pos.y] = '.';
+            mapRef->GetBox()[pos.x][pos.y] = '.';
 
             // Establecer nueva posición
             SetNewPosition(newPos);
@@ -123,7 +123,7 @@ void BigSmoke::TakeDamage(int damageAmount)
         health = 0;
         isAlive = false;
         // Limpiar posición en el mapa
-        mapRef->getBox()[pos.x][pos.y] = '.';
+        mapRef->GetBox()[pos.x][pos.y] = '.';
     }
 
     // Si está cerca del jugador, activar ataque
