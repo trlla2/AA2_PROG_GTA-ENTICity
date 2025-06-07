@@ -4,13 +4,13 @@
 
 Manager::Manager() {
 	config = new Config("config.txt");
-	
+
 	playing = true;
 
 	lastTime = GetTickCount64();
 	deltaTime = 0.0f;
 	stateTimer = 0;
-	menuSelection = 0; 
+	menuSelection = 0;
 	keyPressed = false;
 
 	actualScene = INIT;
@@ -77,7 +77,7 @@ void Manager::Menu() {
 	std::cout << "========================================" << std::endl;
 	std::cout << std::endl;
 
-	
+
 	if (menuSelection == 0) {
 		std::cout << " > Play Game" << std::endl;
 		std::cout << "   Exit" << std::endl;
@@ -90,7 +90,7 @@ void Manager::Menu() {
 	std::cout << std::endl;
 	std::cout << "Use UP/DOWN arrows to navigate, SPACE to select" << std::endl;
 
-	
+
 	if (GetAsyncKeyState(VK_UP)) {
 		if (!keyPressed) {
 			menuSelection = 0; //  Play 
@@ -106,17 +106,17 @@ void Manager::Menu() {
 	else if (GetAsyncKeyState(VK_SPACE)) {
 		if (!keyPressed) {
 			if (menuSelection == 0) {
-				if(map == nullptr)
+				if (map == nullptr)
 					delete map;
-				if(player == nullptr)
+				if (player == nullptr)
 					delete player;
 
 				player = new Player(config->playerMaxHealth, config->playerAttackPower);
-				map = new Map(player, config->height, config->width, config->numPedastriansSantos, config->numPedastriansSanFierro, config->maxMoneyDropPedastriansSantos, config->maxMoneyDropPedastriansSanFerro, config->numCarsLosSantos, config->numCarsSanFierro, config->numCarsLasVenturas, config->damageToPlayerLosSantos, config->damageToPlayerSanFierro, config->pedestrianHealthLosSantos, config->pedestrianHealthSanFierro);
+				map = new Map(player, config->height, config->width, config->numPedestriansLosSantos, config->numPedestriansSanFierro, config->maxMoneyDropPedestriansLosSantos, config->maxMoneyDropPedestriansSanFierro, config->numCarsLosSantos, config->numCarsSanFierro, config->numCarsLasVenturas, config->damageToPlayerLosSantos, config->damageToPlayerSanFierro, config->pedestrianHealthLosSantos, config->pedestrianHealthSanFierro);
 				player->setMapRef(map);
 
 				actualScene = GAMEPLAY;
-				
+
 			}
 			else {
 				playing = false;// Exit
@@ -125,7 +125,7 @@ void Manager::Menu() {
 		}
 	}
 	else {
-		keyPressed = false; 
+		keyPressed = false;
 	}
 }
 
@@ -141,12 +141,12 @@ void Manager::Gameplay() {
 	deltaTime = (currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
 
-	for (int i = 0; i < config->numPedastriansSantos; i++) {
+	for (int i = 0; i < config->numPedestriansLosSantos; i++) {
 		map->GetPeatonesLosSantos()[i].MovePeaton();
 		map->GetPeatonesLosSantos()[i].UpdateAttackTimer(deltaTime);
 	}
 
-	for (int i = 0; i < config->numPedastriansSanFierro; i++) {
+	for (int i = 0; i < config->numPedestriansSanFierro; i++) {
 		map->GetPeatonesSanFierro()[i].MovePeaton();
 		map->GetPeatonesSanFierro()[i].UpdateAttackTimer(deltaTime);
 	}
@@ -178,7 +178,7 @@ void Manager::Gameplay() {
 	system("CLS");
 	map->printMap();
 	std::cout << "Current Health: " << player->GetHealth() << std::endl;
-	
+
 }
 
 void Manager::GameOver() {
@@ -192,16 +192,16 @@ void Manager::GameOver() {
 	std::cout << std::endl;
 	std::cout << "Final Stats:" << std::endl;
 	std::cout << "Health: " << player->GetHealth() << std::endl;
-	std::cout << "Money: $" << player->GetPlayerMoney() << std::endl; 
+	std::cout << "Money: $" << player->GetPlayerMoney() << std::endl;
 
 
-	
+
 	DWORD currentTime = GetTickCount64();
 	deltaTime = (currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
 	stateTimer += deltaTime;
 
-	
+
 	if (stateTimer >= 5.0f) {
 		actualScene = MENU;
 	}

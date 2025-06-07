@@ -1,30 +1,37 @@
-#pragma once
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
 #include <iostream>
+
 struct Config
 {
-	int height;
 	int width;
+	int height;
 
-	int numPedastriansSantos;
-	int moneyToGoSanFierro;
-	int maxMoneyDropPedastriansSantos;
-	int numPedastriansSanFierro;
-	int moneyToGoVenturas;
-	int maxMoneyDropPedastriansSanFerro;
-	int numCarsLosSantos;
-	int numCarsSanFierro;
-	int numCarsLasVenturas;
-	int pedestrianHealthLosSantos;
-	int pedestrianHealthSanFierro;
-	int damageToPlayerLosSantos;
-	int damageToPlayerSanFierro;
-
-	int playerAttackPower;
 	int playerMaxHealth;
+	int playerAttackPower;
+
+	int toll1Cost; 
+	int toll2Cost; 
+
+	int numPedestriansLosSantos;
+	int maxMoneyDropPedestriansLosSantos;
+	int pedestrianHealthLosSantos;
+	int damageToPlayerLosSantos;
+	int numCarsLosSantos;
+
+	int numPedestriansSanFierro;
+	int maxMoneyDropPedestriansSanFierro;
+	int pedestrianHealthSanFierro;
+	int damageToPlayerSanFierro;
+	int numCarsSanFierro;
+
+	int numPedestriansLasVenturas;
+	int maxMoneyDropPedestriansLasVenturas;
+	int pedestrianHealthLasVenturas;
+	int damageToPlayerLasVenturas;
+	int numCarsLasVenturas;
 
 	Config();
 	Config(std::string fileName);
