@@ -3,7 +3,7 @@
 #include "Map.h" // incluyo player para evitar dependencia circular
 
 Player::Player(int maxHP, int attackPwr) {
-
+    currentDirection = DOWN;
     mapRef = nullptr;
     currentCar = nullptr;
     health = maxHP;
@@ -27,6 +27,7 @@ void Player::movement() { // reads user input and moves the player accordingly
         Position newCarPos = currentCarPos;
 
         if (GetAsyncKeyState(VK_UP)) {
+            currentDirection = UP;
             newCarPos = Position(currentCarPos.x - 1, currentCarPos.y);
             if (mapRef->checkNewCarPosition(newCarPos)) {
                 // Verificar si hay peatón en la nueva posición antes de mover
@@ -35,6 +36,7 @@ void Player::movement() { // reads user input and moves the player accordingly
             }
         }
         else if (GetAsyncKeyState(VK_DOWN)) {
+            currentDirection = DOWN;
             newCarPos = Position(currentCarPos.x + 1, currentCarPos.y);
             if (mapRef->checkNewCarPosition(newCarPos)) {
                 mapRef->HandleCarPedestrianCollision(newCarPos);
@@ -42,6 +44,7 @@ void Player::movement() { // reads user input and moves the player accordingly
             }
         }
         else if (GetAsyncKeyState(VK_LEFT)) {
+            currentDirection = LEFT;
             newCarPos = Position(currentCarPos.x, currentCarPos.y - 1);
             if (mapRef->checkNewCarPosition(newCarPos)) {
                 mapRef->HandleCarPedestrianCollision(newCarPos);
@@ -49,6 +52,7 @@ void Player::movement() { // reads user input and moves the player accordingly
             }
         }
         else if (GetAsyncKeyState(VK_RIGHT)) {
+            currentDirection = RIGHT;
             newCarPos = Position(currentCarPos.x, currentCarPos.y + 1);
             if (mapRef->checkNewCarPosition(newCarPos)) {
                 mapRef->HandleCarPedestrianCollision(newCarPos);
@@ -58,18 +62,22 @@ void Player::movement() { // reads user input and moves the player accordingly
     }
     else {
         if (GetAsyncKeyState(VK_UP)) {
+            currentDirection = UP;
             Position newPos(pos.x - 1, pos.y);
             setNewPosition(newPos);
         }
         else if (GetAsyncKeyState(VK_DOWN)) {
+            currentDirection = DOWN;
             Position newPos(pos.x + 1, pos.y);
             setNewPosition(newPos);
         }
         else if (GetAsyncKeyState(VK_LEFT)) {
+            currentDirection = LEFT;
             Position newPos(pos.x, pos.y - 1);
             setNewPosition(newPos);
         }
         else if (GetAsyncKeyState(VK_RIGHT)) {
+            currentDirection = RIGHT;
             Position newPos(pos.x, pos.y + 1);
             setNewPosition(newPos);
         }
@@ -203,3 +211,13 @@ int Player::GetAttackPower() const {
 bool Player::IsArrested() const { return arrested; }
 
 void Player::SetIsArrested() { arrested = true; }
+
+char Player::GetPlayerSymbol() const {
+    switch (currentDirection) {
+    case UP: return '^';
+    case DOWN: return 'v';
+    case LEFT: return '<';
+    case RIGHT: return '>';
+    default: return '^';
+    }
+}

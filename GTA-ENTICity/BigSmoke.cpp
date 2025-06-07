@@ -88,7 +88,10 @@ void BigSmoke::MoveBigSmoke()
             mapRef->getBox()[newPos.x][newPos.y] != 'X' &&
             mapRef->getBox()[newPos.x][newPos.y] != 'P' &&
             mapRef->getBox()[newPos.x][newPos.y] != 'C' &&
-            mapRef->getBox()[newPos.x][newPos.y] != 'J') {
+            (mapRef->getBox()[newPos.x][newPos.y] == '^' ||
+             mapRef->getBox()[newPos.x][newPos.y] == 'v' ||
+             mapRef->getBox()[newPos.x][newPos.y] == '<' ||
+             mapRef->getBox()[newPos.x][newPos.y] == '>' ) ) {
 
             // Limpiar posición anterior
             mapRef->getBox()[pos.x][pos.y] = '.';

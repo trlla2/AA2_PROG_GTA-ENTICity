@@ -9,12 +9,13 @@ class Car;
 class Player
 {
 private:
+	enum Direction { UP, DOWN, LEFT, RIGHT };
+	Direction currentDirection;
 	int playerMoney = 0;
 	int health;
 	int maxHealth;
 	int attackPower;
 	bool arrested;
-	enum PlayerMovement {EMPTY, UP, DOWN, LEFT, RIGHT};
 	Position pos;
 	Car* currentCar;
 
@@ -41,5 +42,7 @@ public:
 	int GetAttackPower() const;
 	bool IsArrested() const;
 	void SetIsArrested();
+
+	char GetPlayerSymbol() const;
 };
 

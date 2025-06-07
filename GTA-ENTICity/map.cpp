@@ -139,9 +139,9 @@ bool Map::checkNewPlayerPosition(Position newPos) {
 	}
 
 	Position playerPos = playerRef->GetPosition();
-	box[playerPos.x][playerPos.y] = '.'; // clear old position box
+	box[playerPos.x][playerPos.y] = '.'; 
 
-	box[newPos.x][newPos.y] = 'J'; // print new position box
+	box[newPos.x][newPos.y] = playerRef->GetPlayerSymbol(); 
 
 	Position toll1Pos(toll1, width / 3);
 	Position toll2Pos(toll2, 2 * width / 3);
@@ -305,7 +305,10 @@ void Map::HandleCarPedestrianCollision(Position carPos) {
 bool Map::SetNewPeatonPosition(Position newPos, Peaton* peaton)
 {
 	if (box[newPos.x][newPos.y] == 'X' ||
-		box[newPos.x][newPos.y] == 'J' ||
+		box[newPos.x][newPos.y] == '^' ||
+		box[newPos.x][newPos.y] == 'v' ||
+		box[newPos.x][newPos.y] == '<' ||
+		box[newPos.x][newPos.y] == '>' ||
 		box[newPos.x][newPos.y] == 'P' ||
 		box[newPos.x][newPos.y] == 'C' ||
 		box[newPos.x][newPos.y] == 'B' ||
@@ -331,7 +334,7 @@ void Map::printMap() {
 
 	if (!playerRef->IsInCar()) {
 		Position playerPos = playerRef->GetPosition();
-		box[playerPos.x][playerPos.y] = 'J';
+		box[playerPos.x][playerPos.y] = playerRef->GetPlayerSymbol();
 	}
 	else {
 		Position carPos = playerRef->GetCurrentCar()->GetPosition();
