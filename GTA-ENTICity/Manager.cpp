@@ -53,8 +53,7 @@ void Manager::Init() {
 
 	std::cout << "========================================" << std::endl;
 	std::cout << "                                        " << std::endl;
-	std::cout << "           GTA SAN ANDREAS              " << std::endl;
-	std::cout << "              CLONE GAME                " << std::endl;
+	std::cout << "             GTA ENTI City              " << std::endl;
 	std::cout << "                                        " << std::endl;
 	std::cout << "========================================" << std::endl;
 
