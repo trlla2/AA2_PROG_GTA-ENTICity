@@ -9,9 +9,9 @@ BigSmoke::BigSmoke()
     pos.y = 0;
     playerRef = nullptr;
     mapRef = nullptr;
-    maxHealth = 30; 
+    maxHealth = 300; 
     health = maxHealth;
-    damage = 10; 
+    damage = 50; 
     attackTimer = 0.0f;
     isAttacking = false;
     isAlive = true;
@@ -85,7 +85,7 @@ void BigSmoke::MoveBigSmoke()
 
         if (newPos.x >= 1 && newPos.x < mapRef->getHeight() - 1 &&
             newPos.y >= minY && newPos.y <= maxY &&
-            mapRef->getBox()[newPos.x][newPos.y] != 'W' &&
+            mapRef->getBox()[newPos.x][newPos.y] != 'X' &&
             mapRef->getBox()[newPos.x][newPos.y] != 'P' &&
             mapRef->getBox()[newPos.x][newPos.y] != 'C' &&
             mapRef->getBox()[newPos.x][newPos.y] != 'J') {

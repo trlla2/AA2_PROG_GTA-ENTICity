@@ -42,7 +42,7 @@
     <ClCompile Include="Manager.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
-    <ClCompile Include="money.cpp">
+    <ClCompile Include="Money.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +77,7 @@
     <ClInclude Include="Manager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="money.h">
+    <ClInclude Include="Money.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

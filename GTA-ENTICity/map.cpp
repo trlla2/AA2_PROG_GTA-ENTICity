@@ -9,6 +9,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 	width = w;
 	numPeatonesLosSantos = numPeatonesLS;
 	numPeatonesSanFierro = numPeatonesSF;
+	numPeatonesLasVenturas = numPeatonesLV;
 	numCarsLosSantos = numCarsLS;
 	numCarsSanFierro = numCarsSF;
 	numCarsLasVenturas = numCarsLV;
@@ -17,8 +18,8 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 
 	playerRef = player; // get player ref
 
-	moneyForToll1 = 100;
-	moneyForToll2 = 500;
+	moneyForToll1 = toll1Cost;
+	moneyForToll2 = toll2Cost;
 	alreadyPassedToll1 = false;
 	alreadyPassedToll2 = false;
 
@@ -40,19 +41,19 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 		for (int j = 0; j < width; j++) {
 			// Verify if is wall
 			if (i == 0 || i == height - 1 || j == 0 || j == width - 1) {
-				box[i][j] = 'W';
+				box[i][j] = 'X';
 			}
 			else if (j == width / 3) { // Los Santos San Fierro diviision
 				if (i == toll1)
-					box[i][j] = '.';
+					box[i][j] = 'T';
 				else
-					box[i][j] = 'W';
+					box[i][j] = 'X';
 			}
 			else if (j == 2 * width / 3) { //San Fierro  diviision
 				if (i == toll2)
-					box[i][j] = '.';
+					box[i][j] = 'T';
 				else
-					box[i][j] = 'W';
+					box[i][j] = 'X';
 			}
 			else {
 				box[i][j] = '.'; // Empty box
@@ -113,6 +114,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 	peatonesLasVenturas = new Peaton[numPeatonesLasVenturas];
 	for (int i = 0; i < numPeatonesLasVenturas; i++) {
 		tempPeaton = new Peaton(playerRef, this, Zone::LAS_VENTURAS, maxMoneyDropLV, peatonDMGLV, peatonHPLV);
+
 		if (peatonesLasVenturas != nullptr) {
 			peatonesLasVenturas[i] = *tempPeaton;
 		}
@@ -129,7 +131,7 @@ Map::Map(Player* player, int h, int w, int numPeatonesLS, int numPeatonesSF, int
 
 bool Map::checkNewPlayerPosition(Position newPos) {
 	
-	if (box[newPos.x][newPos.y] == 'W' ||
+	if (box[newPos.x][newPos.y] == 'X' ||
 		box[newPos.x][newPos.y] == 'P' ||
 		box[newPos.x][newPos.y] == 'C' ||
 		box[newPos.x][newPos.y] == 'B') {
@@ -169,7 +171,7 @@ bool Map::checkNewPlayerPosition(Position newPos) {
 
 bool Map::checkNewCarPosition(Position newPos) {
 	
-	if (box[newPos.x][newPos.y] == 'W' ||
+	if (box[newPos.x][newPos.y] == 'X' ||
 		box[newPos.x][newPos.y] == 'C' ||
 		box[newPos.x][newPos.y] == 'B') {
 		return false;
@@ -302,7 +304,7 @@ void Map::HandleCarPedestrianCollision(Position carPos) {
 
 bool Map::SetNewPeatonPosition(Position newPos, Peaton* peaton)
 {
-	if (box[newPos.x][newPos.y] == 'W' ||
+	if (box[newPos.x][newPos.y] == 'X' ||
 		box[newPos.x][newPos.y] == 'J' ||
 		box[newPos.x][newPos.y] == 'P' ||
 		box[newPos.x][newPos.y] == 'C' ||
@@ -321,6 +323,12 @@ bool Map::SetNewPeatonPosition(Position newPos, Peaton* peaton)
 
 void Map::printMap() {
 	
+	Position toll1Pos(toll1, width / 3);
+	Position toll2Pos(toll2, 2 * width / 3);
+	box[toll1Pos.x][toll1Pos.y] = 'T';
+	box[toll2Pos.x][toll2Pos.y] = 'T';
+
+
 	if (!playerRef->IsInCar()) {
 		Position playerPos = playerRef->GetPosition();
 		box[playerPos.x][playerPos.y] = 'J';
@@ -357,6 +365,10 @@ void Map::printMap() {
 			box[bigSmokePos.x][bigSmokePos.y] = 'B';
 		}
 	}
+
+	
+
+
 
 	Position playerPos = playerRef->IsInCar() ? playerRef->GetCurrentCar()->GetPosition() : playerRef->GetPosition();
 	int startI = playerPos.x - seeDistance * 0.5f;
